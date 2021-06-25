@@ -70,7 +70,7 @@ namespace APIQuiz.Controllers
             
             PlayerService.Update(updatedPlayer);
 
-            return NoContent();
+            return Ok();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace APIQuiz.Controllers
 
             PlayerService.Delete(id);
 
-            return NoContent();
+            return Ok();
         }
     }
 }
