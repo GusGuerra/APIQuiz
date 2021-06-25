@@ -19,7 +19,6 @@ namespace APIQuiz.Services.Tests
         public void GetAll_Simple_Test(int playerListSize)
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             for (int i = 0; i < playerListSize; i++)
             {
@@ -38,7 +37,6 @@ namespace APIQuiz.Services.Tests
         public void Get_ValidId_Test(int playerListSize, int id)
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             for (int i = 0; i < playerListSize; i++)
             {
@@ -58,7 +56,6 @@ namespace APIQuiz.Services.Tests
         public void Get_InvalidId_Test(int playerListSize, int id)
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             for (int i = 0; i < playerListSize; i++)
             {
@@ -75,7 +72,6 @@ namespace APIQuiz.Services.Tests
         public void Create_Simple_Test()
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             Player player = new() { Name = "new_player_name" };
             PlayerService.Create(player);
@@ -93,7 +89,6 @@ namespace APIQuiz.Services.Tests
         public void Create_InvalidId_Test()
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             Player player = new() { Id = 10, Name = "new_player_name" };
             PlayerService.Create(player);
@@ -108,7 +103,6 @@ namespace APIQuiz.Services.Tests
         public void Create_InvalidScore_Test()
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             Player player = new() { Name = "new_player_name", Score = 100 };
             PlayerService.Create(player);
@@ -123,7 +117,6 @@ namespace APIQuiz.Services.Tests
         public void Delete_Simple_Test()
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             Player player = new() { Name = "new_player_name" };
             PlayerService.Create(player);
@@ -142,7 +135,6 @@ namespace APIQuiz.Services.Tests
         public void Update_Simple_Test()
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             Player player = new() { Name = "old_player_name" };
             PlayerService.Create(player);
@@ -165,7 +157,6 @@ namespace APIQuiz.Services.Tests
         public void Exists_True_Test(int playerListSize, int id)
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             for(int i = 0; i < playerListSize; i++)
             {
@@ -183,7 +174,6 @@ namespace APIQuiz.Services.Tests
         public void Exists_False_Test(int playerListSize, int id)
         {
             PlayerService.ClearPlayerServiceClass();
-            Assert.Empty(PlayerService.GetAll());
 
             for (int i = 0; i < playerListSize; i++)
             {
