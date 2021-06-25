@@ -1,5 +1,8 @@
 ﻿using Xunit;
 using APIQuiz.Controllers;
+using APIQuiz.Services;
+using APIQuiz.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +13,22 @@ namespace APIQuiz.Controllers.Tests
 {
     public class PlayerControllerTests
     {
-        [Fact()]
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
         [Trait("Controller", "CreateNewPlayer")]
-        public void CreateNewPlayer_Invalid_Test()
+        public void CreateNewPlayer_InvalidName_Test(string name)
         {
-            Assert.True(false, "This test needs an implementation");
+            PlayerService.ClearPlayerServiceClass();
+            PlayerController playerController = new() { };
+            Player player = new() { Name = name};
+
+            var createNewPlayerResult = playerController.CreateNewPlayer(player);
+            var badRequestResult = createNewPlayerResult as BadRequestResult;
+
+            Assert.NotNull(badRequestResult);
+            Assert.Equal(400, badRequestResult.StatusCode);
         }
 
         [Fact()]
