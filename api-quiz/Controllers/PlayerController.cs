@@ -9,7 +9,7 @@ namespace APIQuiz.Controllers
     [Route("apiQuiz/[controller]")]
     public class PlayerController : ControllerBase
     {
-        private readonly PlayerService playerService = new();
+        private static PlayerService playerService = new();
         public PlayerController()
         {
         }

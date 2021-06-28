@@ -11,6 +11,13 @@ namespace APIQuiz.Services.Tests
 {
     public class PlayerServiceTests
     {
+        private PlayerService playerService;
+
+        public PlayerServiceTests()
+        {
+            playerService = new();
+        }
+
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
@@ -18,8 +25,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "GetAll")]
         public void GetAll_Simple_Test(int playerListSize)
         {
-            PlayerService playerService = new();
-
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
@@ -36,8 +41,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Get")]
         public void Get_ValidId_Test(int playerListSize, int id)
         {
-            PlayerService playerService = new();
-
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
@@ -55,8 +58,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Get")]
         public void Get_InvalidId_Test(int playerListSize, int id)
         {
-            PlayerService playerService = new();
-
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
@@ -71,8 +72,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Create")]
         public void Create_Simple_Test()
         {
-            PlayerService playerService = new();
-
             Player player = new() { Name = "new_player_name" };
             playerService.Create(player);
 
@@ -88,8 +87,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Create")]
         public void Create_InvalidId_Test()
         {
-            PlayerService playerService = new();
-
             Player player = new() { Id = 10, Name = "new_player_name" };
             playerService.Create(player);
 
@@ -102,8 +99,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Create")]
         public void Create_InvalidScore_Test()
         {
-            PlayerService playerService = new();
-
             Player player = new() { Name = "new_player_name", Score = 100 };
             playerService.Create(player);
 
@@ -116,8 +111,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Delete")]
         public void Delete_Simple_Test()
         {
-            PlayerService playerService = new();
-
             Player player = new() { Name = "new_player_name" };
             playerService.Create(player);
 
@@ -134,8 +127,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Update")]
         public void Update_Simple_Test()
         {
-            PlayerService playerService = new();
-
             Player player = new() { Name = "old_player_name" };
             playerService.Create(player);
 
@@ -156,8 +147,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Exists")]
         public void Exists_True_Test(int playerListSize, int id)
         {
-            PlayerService playerService = new();
-
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
@@ -173,8 +162,6 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Exists")]
         public void Exists_False_Test(int playerListSize, int id)
         {
-            PlayerService playerService = new();
-
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };

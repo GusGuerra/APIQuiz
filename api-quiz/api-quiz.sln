@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api-quiz", "api-quiz.csproj", "{2814819A-27A2-483C-BEAE-CFF09BFA23EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-quizTests", "..\api-quizTests\api-quizTests.csproj", "{7E99DD49-7B9A-43A2-9D6E-1938769BC503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api-quizTests", "..\api-quizTests\api-quizTests.csproj", "{7E99DD49-7B9A-43A2-9D6E-1938769BC503}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
