@@ -4,11 +4,11 @@ using APIQuiz.Models;
 
 namespace APIQuiz.Services
 {
-    public static class PlayerService
+    public class PlayerService
     {
-        static List<Player> Players { get; }
-        static int NextId = 1;
-        static PlayerService()
+        private List<Player> Players { get; }
+        private int NextId = 1;
+        public PlayerService()
         {
             Players = new List<Player>();
         }
@@ -19,7 +19,7 @@ namespace APIQuiz.Services
         /// <returns>
         /// List of all active players
         /// </returns>
-        public static List<Player> GetAll() => Players;
+        public List<Player> GetAll() => Players;
 
         /// <summary>
         /// Finds player with specified id
@@ -28,13 +28,13 @@ namespace APIQuiz.Services
         /// <returns>
         /// Player object with matching id or null if not found
         /// </returns>
-        public static Player Get(int id) => Players.FirstOrDefault(p => p.Id == id);
+        public Player Get(int id) => Players.FirstOrDefault(p => p.Id == id);
 
         /// <summary>
         /// Adds a new player to the game
         /// </summary>
         /// <param name="player"></param>
-        public static void Create(Player player)
+        public void Create(Player player)
         {
             player.Id = GetAndUpdateNextId();
             player.Score = 0;
@@ -46,7 +46,7 @@ namespace APIQuiz.Services
         /// Removes a player from the list
         /// </summary>
         /// <param name="id"></param>
-        public static void Delete(int id)
+        public void Delete(int id)
         {
             var player = Get(id);
             Players.Remove(player);
@@ -56,12 +56,9 @@ namespace APIQuiz.Services
         /// Updates a player's name 
         /// </summary>
         /// <param name="player"></param>
-        public static void Update(Player player)
+        public void Update(Player player)
         {
             var index = Players.FindIndex(p => p.Id == player.Id);
-            if (index == -1)
-                return;
-
             Players[index] = player;
         }
 
@@ -69,7 +66,7 @@ namespace APIQuiz.Services
         /// Gets the next id and updates its value
         /// </summary>
         /// <returns>Next id to be used by a player</returns>
-        public static int GetAndUpdateNextId()
+        public int GetAndUpdateNextId()
         {
             return NextId++;
         }
@@ -78,7 +75,7 @@ namespace APIQuiz.Services
         /// Gets the next id
         /// </summary>
         /// <returns>Next id to be used by a player</returns>
-        public static int GetNextId()
+        public int GetNextId()
         {
             return NextId;
         }
@@ -88,7 +85,7 @@ namespace APIQuiz.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns> True if a player with the specified id is found on the list; Otherwise, false. </returns>
-        public static bool Exists(int id)
+        public bool Exists(int id)
         {
             var player = Get(id);
             return player != null;
@@ -103,16 +100,5 @@ namespace APIQuiz.Services
         {
             return !string.IsNullOrEmpty(player.Name) && !string.IsNullOrWhiteSpace(player.Name);
         }
-
-        /// <summary>
-        /// Utility method to "reset" the class. Useful for unit testing.
-        /// It may disappear in the future if I find any better alternatives.
-        /// </summary>
-        public static void ClearPlayerServiceClass()
-        {
-            NextId = 1;
-            Players.Clear();
-        }
-
     }
 }

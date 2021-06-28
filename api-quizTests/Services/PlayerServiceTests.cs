@@ -15,36 +15,36 @@ namespace APIQuiz.Services.Tests
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
-        [Trait("Service", "GetAll")]
+        [Trait("PlayerService", "GetAll")]
         public void GetAll_Simple_Test(int playerListSize)
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
-                PlayerService.Create(player);
+                playerService.Create(player);
             }
 
-            Assert.Equal(playerListSize, PlayerService.GetAll().Count);
+            Assert.Equal(playerListSize, playerService.GetAll().Count);
         }
 
         [Theory]
         [InlineData(1, 1)]
         [InlineData(4, 2)]
         [InlineData(7, 5)]
-        [Trait("Service", "Get")]
+        [Trait("PlayerService", "Get")]
         public void Get_ValidId_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
-                PlayerService.Create(player);
+                playerService.Create(player);
             }
 
-            Player getResult = PlayerService.Get(id);
+            Player getResult = playerService.Get(id);
             Assert.NotNull(getResult);
             Assert.Equal(id, getResult.Id);
         }
@@ -52,32 +52,32 @@ namespace APIQuiz.Services.Tests
         [Theory]
         [InlineData(2, 4)]
         [InlineData(5, 7)]
-        [Trait("Service", "Get")]
+        [Trait("PlayerService", "Get")]
         public void Get_InvalidId_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
-                PlayerService.Create(player);
+                playerService.Create(player);
             }
 
-            Player getResult = PlayerService.Get(id);
+            Player getResult = playerService.Get(id);
             Assert.Null(getResult);
         }
 
         [Fact]
-        [Trait("Service", "Create")]
+        [Trait("PlayerService", "Create")]
         public void Create_Simple_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             Player player = new() { Name = "new_player_name" };
-            PlayerService.Create(player);
+            playerService.Create(player);
 
-            var players = PlayerService.GetAll();
-            var getResult = PlayerService.Get(player.Id);
+            var players = playerService.GetAll();
+            var getResult = playerService.Get(player.Id);
             Assert.NotNull(getResult);
             Assert.Single(players);
             Assert.Equal(player, players[0]);
@@ -85,65 +85,65 @@ namespace APIQuiz.Services.Tests
         }
 
         [Fact]
-        [Trait("Service", "Create")]
+        [Trait("PlayerService", "Create")]
         public void Create_InvalidId_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             Player player = new() { Id = 10, Name = "new_player_name" };
-            PlayerService.Create(player);
+            playerService.Create(player);
 
-            var players = PlayerService.GetAll();
+            var players = playerService.GetAll();
             Assert.Single(players);
             Assert.Equal(1, players[0].Id);
         }
 
         [Fact]
-        [Trait("Service", "Create")]
+        [Trait("PlayerService", "Create")]
         public void Create_InvalidScore_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             Player player = new() { Name = "new_player_name", Score = 100 };
-            PlayerService.Create(player);
+            playerService.Create(player);
 
-            var players = PlayerService.GetAll();
+            var players = playerService.GetAll();
             Assert.Single(players);
             Assert.Equal(0, players[0].Score);
         }
 
         [Fact]
-        [Trait("Service", "Delete")]
+        [Trait("PlayerService", "Delete")]
         public void Delete_Simple_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             Player player = new() { Name = "new_player_name" };
-            PlayerService.Create(player);
+            playerService.Create(player);
 
-            var players = PlayerService.GetAll();
+            var players = playerService.GetAll();
             Assert.Single(players);
 
-            PlayerService.Delete(player.Id);
+            playerService.Delete(player.Id);
 
             Assert.Empty(players);
-            Assert.Null(PlayerService.Get(player.Id));
+            Assert.Null(playerService.Get(player.Id));
         }
 
         [Fact()]
-        [Trait("Service", "Update")]
+        [Trait("PlayerService", "Update")]
         public void Update_Simple_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             Player player = new() { Name = "old_player_name" };
-            PlayerService.Create(player);
+            playerService.Create(player);
 
             Player updatedPlayer = new() { Id = 1, Name = "new_player_name" };
-            PlayerService.Update(updatedPlayer);
+            playerService.Update(updatedPlayer);
 
-            var players = PlayerService.GetAll();
-            var getResult = PlayerService.Get(player.Id);
+            var players = playerService.GetAll();
+            var getResult = playerService.Get(player.Id);
             Assert.Single(players);
             Assert.Equal(updatedPlayer.Name, getResult.Name);
             Assert.Equal(updatedPlayer.Name, players[0].Name);
@@ -153,42 +153,42 @@ namespace APIQuiz.Services.Tests
         [InlineData(1, 1)]
         [InlineData(4, 2)]
         [InlineData(7, 5)]
-        [Trait("Service", "Exists")]
+        [Trait("PlayerService", "Exists")]
         public void Exists_True_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
-            for(int i = 0; i < playerListSize; i++)
+            for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
-                PlayerService.Create(player);
+                playerService.Create(player);
             }
 
-            Assert.True(PlayerService.Exists(id));
+            Assert.True(playerService.Exists(id));
         }
 
         [Theory]
         [InlineData(2, 4)]
         [InlineData(5, 7)]
-        [Trait("Service", "Exists")]
+        [Trait("PlayerService", "Exists")]
         public void Exists_False_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
+            PlayerService playerService = new();
 
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
-                PlayerService.Create(player);
+                playerService.Create(player);
             }
 
-            Assert.False(PlayerService.Exists(id));
+            Assert.False(playerService.Exists(id));
         }
 
         [Theory]
         [InlineData(".")]
         [InlineData("a")]
         [InlineData("name with spaces")]
-        [Trait("Service", "HasValidName")]
+        [Trait("PlayerService", "HasValidName")]
         public void HasValidName_True_Test(string name)
         {
             Player player = new() { Name = name };
@@ -199,7 +199,7 @@ namespace APIQuiz.Services.Tests
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        [Trait("Service", "HasValidName")]
+        [Trait("PlayerService", "HasValidName")]
         public void HasValidName_False_Test(string name)
         {
             Player player = new() { Name = name };
