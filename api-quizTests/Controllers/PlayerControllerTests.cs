@@ -21,7 +21,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "CreateNewPlayer")]
         public void CreateNewPlayer_InvalidName_Test(string name)
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
             Player player = new() { Name = name};
 
@@ -39,7 +38,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "CreateNewPlayer")]
         public void CreateNewPlayer_Valid_Test(string name)
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
             Player player = new() { Name = name };
 
@@ -56,7 +54,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "GetPlayerById")]
         public void GetPlayerById_Invalid_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             for (int i = 0; i < playerListSize; i++)
@@ -79,7 +76,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "GetPlayerById")]
         public void GetPlayerById_Valid_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             for (int i = 0; i < playerListSize; i++)
@@ -99,7 +95,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_Valid_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             Player player = new() { Name = "old_player_name" };
@@ -117,7 +112,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidId_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             Player player = new() { Name = "old_player_name" };
@@ -138,7 +132,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidName_Test(string name)
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             Player player = new() { Name = "old_player_name" };
@@ -156,7 +149,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidScore_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             Player player = new() { Name = "old_player_name" };
@@ -174,7 +166,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidPlayer_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             Player player = new() { Name = "old_player_name" };
@@ -192,7 +183,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "DeletePlayerById")]
         public void DeletePlayerById_Valid_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             Player player = new() { Name = "new_player_name" };
@@ -209,7 +199,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "DeletePlayerById")]
         public void DeletePlayerById_InvalidPlayer_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
             PlayerController playerController = new() { };
 
             Player player = new() { Name = "new_player_name" };

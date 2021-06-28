@@ -9,6 +9,7 @@ namespace APIQuiz.Controllers
     [Route("apiQuiz/[controller]")]
     public class PlayerController : ControllerBase
     {
+        private readonly PlayerService playerService = new();
         public PlayerController()
         {
         }
@@ -24,7 +25,7 @@ namespace APIQuiz.Controllers
             if (!PlayerService.HasValidName(player))
                 return BadRequest();
 
-            PlayerService.Create(player);
+            playerService.Create(player);
             return CreatedAtAction(nameof(CreateNewPlayer), new { id = player.Id }, player);
         }
 
@@ -36,10 +37,10 @@ namespace APIQuiz.Controllers
         [HttpGet("{id}")]
         public ActionResult<Player> GetPlayerById(int id)
         {
-            if (!PlayerService.Exists(id))
+            if (!playerService.Exists(id))
                 return NotFound();
 
-            return PlayerService.Get(id);
+            return playerService.Get(id);
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace APIQuiz.Controllers
         /// </summary>
         /// <returns> List of active players in json format </returns>
         [HttpGet]
-        public ActionResult<List<Player>> GetAllPlayers() => PlayerService.GetAll();
+        public ActionResult<List<Player>> GetAllPlayers() => playerService.GetAll();
 
         /// <summary>
         /// Verify invalid requests and updates the player with specified id
@@ -61,14 +62,14 @@ namespace APIQuiz.Controllers
             if (id != updatedPlayer.Id || !PlayerService.HasValidName(updatedPlayer))
                 return BadRequest();
 
-            if (!PlayerService.Exists(id))
+            if (!playerService.Exists(id))
                 return NotFound();
             
-            var existingPlayer = PlayerService.Get(id);
+            var existingPlayer = playerService.Get(id);
             if (existingPlayer.Score != updatedPlayer.Score)
                 return BadRequest();
             
-            PlayerService.Update(updatedPlayer);
+            playerService.Update(updatedPlayer);
 
             return Ok();
         }
@@ -81,10 +82,10 @@ namespace APIQuiz.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeletePlayerById(int id)
         {
-            if (!PlayerService.Exists(id))
+            if (!playerService.Exists(id))
                 return NotFound();
 
-            PlayerService.Delete(id);
+            playerService.Delete(id);
 
             return Ok();
         }
