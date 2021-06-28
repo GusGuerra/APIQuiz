@@ -59,9 +59,6 @@ namespace APIQuiz.Services
         public static void Update(Player player)
         {
             var index = Players.FindIndex(p => p.Id == player.Id);
-            if (index == -1)
-                return;
-
             Players[index] = player;
         }
 
