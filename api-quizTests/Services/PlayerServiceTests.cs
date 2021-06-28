@@ -11,14 +11,17 @@ namespace APIQuiz.Services.Tests
 {
     public class PlayerServiceTests
     {
+        public PlayerServiceTests(){
+            PlayerService.ClearPlayerServiceClass();
+        }
+
         [Theory]
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
-        [Trait("Service", "GetAll")]
+        [Trait("PlayerService", "GetAll")]
         public void GetAll_Simple_Test(int playerListSize)
         {
-            PlayerService.ClearPlayerServiceClass();
 
             for (int i = 0; i < playerListSize; i++)
             {
@@ -33,10 +36,9 @@ namespace APIQuiz.Services.Tests
         [InlineData(1, 1)]
         [InlineData(4, 2)]
         [InlineData(7, 5)]
-        [Trait("Service", "Get")]
+        [Trait("PlayerService", "Get")]
         public void Get_ValidId_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
 
             for (int i = 0; i < playerListSize; i++)
             {
@@ -52,10 +54,9 @@ namespace APIQuiz.Services.Tests
         [Theory]
         [InlineData(2, 4)]
         [InlineData(5, 7)]
-        [Trait("Service", "Get")]
+        [Trait("PlayerService", "Get")]
         public void Get_InvalidId_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
 
             for (int i = 0; i < playerListSize; i++)
             {
@@ -68,10 +69,9 @@ namespace APIQuiz.Services.Tests
         }
 
         [Fact]
-        [Trait("Service", "Create")]
+        [Trait("PlayerService", "Create")]
         public void Create_Simple_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
 
             Player player = new() { Name = "new_player_name" };
             PlayerService.Create(player);
@@ -85,10 +85,9 @@ namespace APIQuiz.Services.Tests
         }
 
         [Fact]
-        [Trait("Service", "Create")]
+        [Trait("PlayerService", "Create")]
         public void Create_InvalidId_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
 
             Player player = new() { Id = 10, Name = "new_player_name" };
             PlayerService.Create(player);
@@ -99,10 +98,9 @@ namespace APIQuiz.Services.Tests
         }
 
         [Fact]
-        [Trait("Service", "Create")]
+        [Trait("PlayerService", "Create")]
         public void Create_InvalidScore_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
 
             Player player = new() { Name = "new_player_name", Score = 100 };
             PlayerService.Create(player);
@@ -113,10 +111,9 @@ namespace APIQuiz.Services.Tests
         }
 
         [Fact]
-        [Trait("Service", "Delete")]
+        [Trait("PlayerService", "Delete")]
         public void Delete_Simple_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
 
             Player player = new() { Name = "new_player_name" };
             PlayerService.Create(player);
@@ -131,10 +128,9 @@ namespace APIQuiz.Services.Tests
         }
 
         [Fact()]
-        [Trait("Service", "Update")]
+        [Trait("PlayerService", "Update")]
         public void Update_Simple_Test()
         {
-            PlayerService.ClearPlayerServiceClass();
 
             Player player = new() { Name = "old_player_name" };
             PlayerService.Create(player);
@@ -153,10 +149,9 @@ namespace APIQuiz.Services.Tests
         [InlineData(1, 1)]
         [InlineData(4, 2)]
         [InlineData(7, 5)]
-        [Trait("Service", "Exists")]
+        [Trait("PlayerService", "Exists")]
         public void Exists_True_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
 
             for(int i = 0; i < playerListSize; i++)
             {
@@ -170,10 +165,9 @@ namespace APIQuiz.Services.Tests
         [Theory]
         [InlineData(2, 4)]
         [InlineData(5, 7)]
-        [Trait("Service", "Exists")]
+        [Trait("PlayerService", "Exists")]
         public void Exists_False_Test(int playerListSize, int id)
         {
-            PlayerService.ClearPlayerServiceClass();
 
             for (int i = 0; i < playerListSize; i++)
             {
@@ -188,7 +182,7 @@ namespace APIQuiz.Services.Tests
         [InlineData(".")]
         [InlineData("a")]
         [InlineData("name with spaces")]
-        [Trait("Service", "HasValidName")]
+        [Trait("PlayerService", "HasValidName")]
         public void HasValidName_True_Test(string name)
         {
             Player player = new() { Name = name };
@@ -199,7 +193,7 @@ namespace APIQuiz.Services.Tests
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        [Trait("Service", "HasValidName")]
+        [Trait("PlayerService", "HasValidName")]
         public void HasValidName_False_Test(string name)
         {
             Player player = new() { Name = name };
