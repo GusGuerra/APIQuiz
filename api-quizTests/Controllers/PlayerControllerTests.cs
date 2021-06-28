@@ -13,6 +13,11 @@ namespace APIQuiz.Controllers.Tests
 {
     public class PlayerControllerTests
     {
+        private PlayerController playerController;
+        public PlayerControllerTests()
+        {
+            playerController = new();
+        }
 
         [Theory]
         [InlineData("")]
@@ -21,7 +26,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "CreateNewPlayer")]
         public void CreateNewPlayer_InvalidName_Test(string name)
         {
-            PlayerController playerController = new() { };
             Player player = new() { Name = name};
 
             var createNewPlayerResult = playerController.CreateNewPlayer(player);
@@ -38,7 +42,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "CreateNewPlayer")]
         public void CreateNewPlayer_Valid_Test(string name)
         {
-            PlayerController playerController = new() { };
             Player player = new() { Name = name };
 
             var createNewPlayerResult = playerController.CreateNewPlayer(player);
@@ -54,8 +57,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "GetPlayerById")]
         public void GetPlayerById_Invalid_Test(int playerListSize, int id)
         {
-            PlayerController playerController = new() { };
-
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
@@ -76,8 +77,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "GetPlayerById")]
         public void GetPlayerById_Valid_Test(int playerListSize, int id)
         {
-            PlayerController playerController = new() { };
-
             for (int i = 0; i < playerListSize; i++)
             {
                 Player player = new() { Name = "new_player_name" };
@@ -95,8 +94,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_Valid_Test()
         {
-            PlayerController playerController = new() { };
-
             Player player = new() { Name = "old_player_name" };
             playerController.CreateNewPlayer(player);
 
@@ -112,8 +109,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidId_Test()
         {
-            PlayerController playerController = new() { };
-
             Player player = new() { Name = "old_player_name" };
             playerController.CreateNewPlayer(player);
 
@@ -132,8 +127,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidName_Test(string name)
         {
-            PlayerController playerController = new() { };
-
             Player player = new() { Name = "old_player_name" };
             playerController.CreateNewPlayer(player);
 
@@ -149,8 +142,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidScore_Test()
         {
-            PlayerController playerController = new() { };
-
             Player player = new() { Name = "old_player_name" };
             playerController.CreateNewPlayer(player);
 
@@ -166,8 +157,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidPlayer_Test()
         {
-            PlayerController playerController = new() { };
-
             Player player = new() { Name = "old_player_name" };
             playerController.CreateNewPlayer(player);
 
@@ -183,8 +172,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "DeletePlayerById")]
         public void DeletePlayerById_Valid_Test()
         {
-            PlayerController playerController = new() { };
-
             Player player = new() { Name = "new_player_name" };
             playerController.CreateNewPlayer(player);
 
@@ -199,8 +186,6 @@ namespace APIQuiz.Controllers.Tests
         [Trait("Controller", "DeletePlayerById")]
         public void DeletePlayerById_InvalidPlayer_Test()
         {
-            PlayerController playerController = new() { };
-
             Player player = new() { Name = "new_player_name" };
             playerController.CreateNewPlayer(player);
 
