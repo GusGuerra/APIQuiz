@@ -8,13 +8,14 @@
     ".NETCoreApp,Version=v5.0": {
       "api-quizTests/1.0.0": {
         "dependencies": {
-          "MSTest.TestAdapter": "2.2.4",
-          "MSTest.TestFramework": "2.2.4",
+          "MSTest.TestAdapter": "2.2.5",
+          "MSTest.TestFramework": "2.2.5",
           "Microsoft.NET.Test.Sdk": "16.10.0",
           "api-quiz": "1.0.0",
           "coverlet.collector": "3.0.3",
           "xunit": "2.4.1",
-          "xunit.runner.visualstudio": "2.4.1"
+          "xunit.runner.console": "2.4.1",
+          "xunit.runner.visualstudio": "2.4.3"
         },
         "runtime": {
           "api-quizTests.dll": {}
@@ -311,13 +312,13 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "MSTest.TestAdapter/2.2.4": {
+      "MSTest.TestAdapter/2.2.5": {
         "dependencies": {
           "NETStandard.Library": "1.6.1",
           "System.Diagnostics.TextWriterTraceListener": "4.3.0"
         }
       },
-      "MSTest.TestFramework/2.2.4": {
+      "MSTest.TestFramework/2.2.5": {
         "dependencies": {
           "NETStandard.Library": "1.6.1",
           "System.Diagnostics.TextWriterTraceListener": "4.3.0"
@@ -325,11 +326,11 @@
         "runtime": {
           "lib/netstandard1.0/Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll": {
             "assemblyVersion": "14.0.0.0",
-            "fileVersion": "14.0.6025.9"
+            "fileVersion": "14.0.6128.4"
           },
           "lib/netstandard1.0/Microsoft.VisualStudio.TestPlatform.TestFramework.dll": {
             "assemblyVersion": "14.0.0.0",
-            "fileVersion": "14.0.6025.9"
+            "fileVersion": "14.0.6128.4"
           }
         }
       },
@@ -1136,11 +1137,8 @@
           }
         }
       },
-      "xunit.runner.visualstudio/2.4.1": {
-        "dependencies": {
-          "Microsoft.NET.Test.Sdk": "16.10.0"
-        }
-      },
+      "xunit.runner.console/2.4.1": {},
+      "xunit.runner.visualstudio/2.4.3": {},
       "api-quiz/1.0.0": {
         "runtime": {
           "api-quiz.dll": {}
@@ -1217,19 +1215,19 @@
       "path": "microsoft.win32.primitives/4.3.0",
       "hashPath": "microsoft.win32.primitives.4.3.0.nupkg.sha512"
     },
-    "MSTest.TestAdapter/2.2.4": {
+    "MSTest.TestAdapter/2.2.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-oPAz1NwgwkDQ3Ic1I7JljI7cmWEGTbp6pq6DZzRKH45X3Ce/85/H7BLO5dGnGtfbTaPEu88r3eavTuMQR/lX9g==",
-      "path": "mstest.testadapter/2.2.4",
-      "hashPath": "mstest.testadapter.2.2.4.nupkg.sha512"
+      "sha512": "sha512-FvY/n4fEhtqTdLR7xzgfb6UDa9g+9QeKNlH8zA7gqor9cuZ9gNCeHsx1GqKmDyeLA4ZpxAgjIdzp/vGWISA3iw==",
+      "path": "mstest.testadapter/2.2.5",
+      "hashPath": "mstest.testadapter.2.2.5.nupkg.sha512"
     },
-    "MSTest.TestFramework/2.2.4": {
+    "MSTest.TestFramework/2.2.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-KPE/Ze3jD/YJzicpImUgerKGPQOzuTKU4nPIudt5LmQNXuCBBOH/0SOdvvitm8AAwxkvbhKajGuDDF5AJU9VuQ==",
-      "path": "mstest.testframework/2.2.4",
-      "hashPath": "mstest.testframework.2.2.4.nupkg.sha512"
+      "sha512": "sha512-7PQH0yJoQO6bp6kHgVoTowtQZyQilftL64/pxeDzi15vm3UewzRZz74QssTaOi1otA6j2/lxFTEMJk/+HY/apQ==",
+      "path": "mstest.testframework/2.2.5",
+      "hashPath": "mstest.testframework.2.2.5.nupkg.sha512"
     },
     "NETStandard.Library/1.6.1": {
       "type": "package",
@@ -1819,12 +1817,19 @@
       "path": "xunit.extensibility.execution/2.4.1",
       "hashPath": "xunit.extensibility.execution.2.4.1.nupkg.sha512"
     },
-    "xunit.runner.visualstudio/2.4.1": {
+    "xunit.runner.console/2.4.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-mBXd1lp1TQr4to2nFv+c4Tf+RnPoQPKglzwLdbdirOUxRaJsCUNDUx2y7E6j9ajgISlTTp1CydFBZCRCUIrwDg==",
-      "path": "xunit.runner.visualstudio/2.4.1",
-      "hashPath": "xunit.runner.visualstudio.2.4.1.nupkg.sha512"
+      "sha512": "sha512-6yGe+Vx250m1zG/nV8FH1XlftJFoidCThpRdWEIwIFE/rc/lYSuL0M+D1gMDNmZgERAR/sHR18Q/etqd6lxaNA==",
+      "path": "xunit.runner.console/2.4.1",
+      "hashPath": "xunit.runner.console.2.4.1.nupkg.sha512"
+    },
+    "xunit.runner.visualstudio/2.4.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kZZSmOmKA8OBlAJaquPXnJJLM9RwQ27H7BMVqfMLUcTi9xHinWGJiWksa3D4NEtz0wZ/nxd2mogObvBgJKCRhQ==",
+      "path": "xunit.runner.visualstudio/2.4.3",
+      "hashPath": "xunit.runner.visualstudio.2.4.3.nupkg.sha512"
     },
     "api-quiz/1.0.0": {
       "type": "project",

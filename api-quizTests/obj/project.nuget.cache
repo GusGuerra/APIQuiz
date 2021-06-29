@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1pR7oOJcR2hHf8D80h/aTcIJer3u5HzXQVEQv3y+N6V4El2EN/7vEK0h+hu4sso8+Z+DfHY633Yb1O3bWZs96A==",
+  "dgSpecHash": "wjPUyH2seNfb50RHL5aUUJzcuiZeYk0Eeox90BtCLCDTWyBPlPpEfvgt2ZMFMfBbX5neQ2AvJKnNnyvy+JRe7Q==",
   "success": true,
   "projectFilePath": "C:\\repo\\APIQuiz\\api-quizTests\\api-quizTests.csproj",
   "expectedPackageFiles": [
@@ -13,8 +13,8 @@
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\microsoft.testplatform.objectmodel\\16.10.0\\microsoft.testplatform.objectmodel.16.10.0.nupkg.sha512",
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\microsoft.testplatform.testhost\\16.10.0\\microsoft.testplatform.testhost.16.10.0.nupkg.sha512",
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
-    "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\mstest.testadapter\\2.2.4\\mstest.testadapter.2.2.4.nupkg.sha512",
-    "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\mstest.testframework\\2.2.4\\mstest.testframework.2.2.4.nupkg.sha512",
+    "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\mstest.testadapter\\2.2.5\\mstest.testadapter.2.2.5.nupkg.sha512",
+    "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\mstest.testframework\\2.2.5\\mstest.testframework.2.2.5.nupkg.sha512",
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\newtonsoft.json\\9.0.1\\newtonsoft.json.9.0.1.nupkg.sha512",
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\nuget.frameworks\\5.0.0\\nuget.frameworks.5.0.0.nupkg.sha512",
@@ -99,7 +99,8 @@
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\xunit.core\\2.4.1\\xunit.core.2.4.1.nupkg.sha512",
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\xunit.extensibility.core\\2.4.1\\xunit.extensibility.core.2.4.1.nupkg.sha512",
     "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\xunit.extensibility.execution\\2.4.1\\xunit.extensibility.execution.2.4.1.nupkg.sha512",
-    "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.1\\xunit.runner.visualstudio.2.4.1.nupkg.sha512"
+    "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\xunit.runner.console\\2.4.1\\xunit.runner.console.2.4.1.nupkg.sha512",
+    "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.3\\xunit.runner.visualstudio.2.4.3.nupkg.sha512"
   ],
   "logs": []
 }
