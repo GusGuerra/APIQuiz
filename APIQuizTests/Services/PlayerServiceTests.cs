@@ -118,21 +118,20 @@ namespace APIQuiz.Services.Tests
             Assert.Null(playerService.Get(player.Id));
         }
 
-        [Fact()]
+        [Fact]
         [Trait("PlayerService", "Update")]
         public void Update_Simple_Test()
         {
             Player player = new() { Name = "old_player_name" };
             playerService.Create(player);
 
-            Player updatedPlayer = new() { Id = 1, Name = "new_player_name" };
-            playerService.Update(updatedPlayer);
+            Player updatedPlayer = new() { Id = 10, Name = "new_player_name", Score = 999 };
+            playerService.Update(player.Id, updatedPlayer);
 
-            var players = playerService.GetAll();
             var getResult = playerService.Get(player.Id);
-            Assert.Single(players);
             Assert.Equal(updatedPlayer.Name, getResult.Name);
-            Assert.Equal(updatedPlayer.Name, players[0].Name);
+            Assert.Equal(0, getResult.Score);
+            Assert.Equal(player.Id, getResult.Id);
         }
 
         [Theory]

@@ -56,10 +56,10 @@ namespace APIQuiz.Services
         /// Updates a player's name 
         /// </summary>
         /// <param name="player"></param>
-        public void Update(Player player)
+        public void Update(int id, Player player)
         {
-            var index = Players.FindIndex(p => p.Id == player.Id);
-            Players[index] = player;
+            var index = Players.FindIndex(p => p.Id == id);
+            Players[index].CopyUpdatedDataFrom(player);
         }
 
         /// <summary>

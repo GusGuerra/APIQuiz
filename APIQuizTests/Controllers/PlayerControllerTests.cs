@@ -1,4 +1,5 @@
 ﻿using APIQuiz.Models;
+using APIQuiz.Util;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
@@ -44,19 +45,14 @@ namespace APIQuiz.Controllers.Tests
             Assert.Equal(201, createdResult.StatusCode);
         }
 
-        [Theory]
-        [InlineData(2, 4)]
-        [InlineData(5, 7)]
+        [Fact]
         [Trait("Controller", "GetPlayerById")]
-        public void GetPlayerById_Invalid_Test(int playerListSize, int id)
+        public void GetPlayerById_Invalid_Test()
         {
-            for (int i = 0; i < playerListSize; i++)
-            {
-                Player player = new() { Name = "new_player_name" };
-                playerController.CreateNewPlayer(player);
-            }
-
-            var getPlayerByIdResult = playerController.GetPlayerById(id).Result;
+            Player player = new() { Name = "new_player_name" };
+            playerController.CreateNewPlayer(player);
+            
+            var getPlayerByIdResult = playerController.GetPlayerById(PlayerServiceUtil.MAX_PLAYER_NUMBER + 1).Result;
             var notFoundResult = getPlayerByIdResult as NotFoundResult;
 
             Assert.NotNull(notFoundResult);
@@ -90,8 +86,8 @@ namespace APIQuiz.Controllers.Tests
             Player player = new() { Name = "old_player_name" };
             playerController.CreateNewPlayer(player);
 
-            Player updatedPlayer = new() { Id = 1, Name = "new_player_name"};
-            var updatePlayerByIdResult = playerController.UpdatePlayerById(1, updatedPlayer);
+            Player updatedPlayer = new() { Id = 999, Name = "new_player_name", Score = 999};
+            var updatePlayerByIdResult = playerController.UpdatePlayerById(player.Id, updatedPlayer);
             var okResult = updatePlayerByIdResult as OkResult;
 
             Assert.NotNull(okResult);
@@ -106,15 +102,14 @@ namespace APIQuiz.Controllers.Tests
             playerController.CreateNewPlayer(player);
 
             Player updatedPlayer = new() { Id = 1, Name = "new_player_name" };
-            var updatePlayerByIdResult = playerController.UpdatePlayerById(2, updatedPlayer);
-            var badRequestResult = updatePlayerByIdResult as BadRequestResult;
+            var updatePlayerByIdResult = playerController.UpdatePlayerById(PlayerServiceUtil.MAX_PLAYER_NUMBER + 1, updatedPlayer);
+            var notFoundResult = updatePlayerByIdResult as NotFoundResult;
             
-            Assert.NotNull(badRequestResult);
-            Assert.Equal(400, badRequestResult.StatusCode);
+            Assert.NotNull(notFoundResult);
+            Assert.Equal(404, notFoundResult.StatusCode);
         }
 
         [Theory]
-        [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
         [Trait("Controller", "UpdatePlayerById")]
@@ -123,42 +118,12 @@ namespace APIQuiz.Controllers.Tests
             Player player = new() { Name = "old_player_name" };
             playerController.CreateNewPlayer(player);
 
-            Player updatedPlayer = new() { Id = 1, Name = name };
-            var updatePlayerByIdResult = playerController.UpdatePlayerById(1, updatedPlayer);
+            Player updatedPlayer = new() { Id = 999, Name = name, Score = 999 };
+            var updatePlayerByIdResult = playerController.UpdatePlayerById(player.Id, updatedPlayer);
             var badRequestResult = updatePlayerByIdResult as BadRequestResult;
 
             Assert.NotNull(badRequestResult);
             Assert.Equal(400, badRequestResult.StatusCode);
-        }
-
-        [Fact]
-        [Trait("Controller", "UpdatePlayerById")]
-        public void UpdatePlayerById_InvalidScore_Test()
-        {
-            Player player = new() { Name = "old_player_name" };
-            playerController.CreateNewPlayer(player);
-
-            Player updatedPlayer = new() { Id = 1, Name = "new_player_name", Score = 10 };
-            var updatePlayerByIdResult = playerController.UpdatePlayerById(1, updatedPlayer);
-            var badRequestResult = updatePlayerByIdResult as BadRequestResult;
-
-            Assert.NotNull(badRequestResult);
-            Assert.Equal(400, badRequestResult.StatusCode);
-        }
-
-        [Fact]
-        [Trait("Controller", "UpdatePlayerById")]
-        public void UpdatePlayerById_InvalidPlayer_Test()
-        {
-            Player player = new() { Name = "old_player_name" };
-            playerController.CreateNewPlayer(player);
-
-            Player updatedPlayer = new() { Id = 2, Name = "new_player_name" };
-            var updatePlayerByIdResult = playerController.UpdatePlayerById(2, updatedPlayer);
-            var notFoundResult = updatePlayerByIdResult as NotFoundResult;
-
-            Assert.NotNull(notFoundResult);
-            Assert.Equal(404, notFoundResult.StatusCode);
         }
 
         [Fact]
@@ -168,7 +133,7 @@ namespace APIQuiz.Controllers.Tests
             Player player = new() { Name = "new_player_name" };
             playerController.CreateNewPlayer(player);
 
-            var deletePlayerByIdResult = playerController.DeletePlayerById(1);
+            var deletePlayerByIdResult = playerController.DeletePlayerById(player.Id);
             var okResult = deletePlayerByIdResult as OkResult;
 
             Assert.NotNull(okResult);
@@ -182,7 +147,7 @@ namespace APIQuiz.Controllers.Tests
             Player player = new() { Name = "new_player_name" };
             playerController.CreateNewPlayer(player);
 
-            var deletePlayerByIdResult = playerController.DeletePlayerById(2);
+            var deletePlayerByIdResult = playerController.DeletePlayerById(PlayerServiceUtil.MAX_PLAYER_NUMBER + 1);
             var notFoundResult = deletePlayerByIdResult as NotFoundResult;
 
             Assert.NotNull(notFoundResult);
