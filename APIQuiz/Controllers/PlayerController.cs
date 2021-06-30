@@ -6,7 +6,7 @@ using APIQuiz.Services;
 namespace APIQuiz.Controllers
 {
     [ApiController]
-    [Route("api/players")]
+    [Route("api/[controller]")]
     public class PlayerController : ControllerBase
     {
         private static PlayerService playerService = new();
@@ -48,10 +48,7 @@ namespace APIQuiz.Controllers
         /// </summary>
         /// <returns> List of active players in json format </returns>
         [HttpGet]
-        public ActionResult<List<Player>> GetAllPlayers()
-        {
-            return playerService.GetAll();
-        }
+        public ActionResult<List<Player>> GetAllPlayers() => playerService.GetAll();
 
         /// <summary>
         /// Verify invalid requests and updates the player with specified id
@@ -59,7 +56,7 @@ namespace APIQuiz.Controllers
         /// <param name="id"></param>
         /// <param name="updatedPlayer"></param>
         /// <returns> No content </returns>
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public IActionResult UpdatePlayerById(int id, Player updatedPlayer)
         {
             if (id != updatedPlayer.Id || !PlayerService.HasValidName(updatedPlayer))
