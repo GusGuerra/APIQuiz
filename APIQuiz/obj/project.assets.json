@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\repo\\APIQuiz\\api-quiz\\APIQuiz.csproj",
+      "projectUniqueName": "C:\\repo\\APIQuiz\\APIQuiz\\APIQuiz.csproj",
       "projectName": "APIQuiz",
-      "projectPath": "C:\\repo\\APIQuiz\\api-quiz\\APIQuiz.csproj",
+      "projectPath": "C:\\repo\\APIQuiz\\APIQuiz\\APIQuiz.csproj",
       "packagesPath": "C:\\Users\\Gustavo Guerra\\.nuget\\packages\\",
-      "outputPath": "C:\\repo\\APIQuiz\\api-quiz\\obj\\",
+      "outputPath": "C:\\repo\\APIQuiz\\APIQuiz\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Gustavo Guerra\\AppData\\Roaming\\NuGet\\NuGet.Config",

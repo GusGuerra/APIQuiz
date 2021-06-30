@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3Ydz4yFdhkaS6QGJBaYA50S/QY3OfJy/KV8d40SuUk5fOvzqi+dLLl7qfSRM2SSdabkT2mx98HwIS7vGtHiEAA==",
+  "dgSpecHash": "+JzzJ6a8/jAIuUQYYk31IEROjAOivMqrScK/OVfp9TAd3G03BUd70TNoqp9Wn4gTEpeoo/TfZB5xi1aJ/4EI7Q==",
   "success": true,
-  "projectFilePath": "C:\\repo\\APIQuiz\\api-quiz\\api-quiz.csproj",
+  "projectFilePath": "C:\\repo\\APIQuiz\\api-quiz\\APIQuiz.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
