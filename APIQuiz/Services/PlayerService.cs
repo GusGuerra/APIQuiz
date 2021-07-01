@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using APIQuiz.Models;
+using APIQuiz.Util;
 
 namespace APIQuiz.Services
 {
@@ -14,12 +15,20 @@ namespace APIQuiz.Services
         }
 
         /// <summary>
-        /// Lists all active players
+        /// Lists the specified page from the list of all active players
         /// </summary>
         /// <returns>
         /// List of all active players
         /// </returns>
-        public List<Player> GetAll() => Players;
+        public List<Player> GetAll(int page)
+        {
+            page = PlayerServiceUtil.PageNumberAdjustment(page, Players.Count);
+
+            int firstIndexInPage = (page - 1) * PlayerServiceUtil.MAX_PLAYERS_PER_PAGE;
+            int playerAmount = PlayerServiceUtil.PlayerAmountCalculation(firstIndexInPage, Players.Count);
+
+            return Players.GetRange(firstIndexInPage, playerAmount);
+        }
 
         /// <summary>
         /// Finds player with specified id

@@ -1,6 +1,7 @@
 ﻿using Xunit;
-using System.Linq;
+using APIQuiz.Util;
 using APIQuiz.Models;
+using System.Collections.Generic;
 
 namespace APIQuiz.Services.Tests
 {
@@ -14,9 +15,12 @@ namespace APIQuiz.Services.Tests
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
+        [InlineData(PlayerServiceUtil.MAX_PLAYERS_PER_PAGE - 1)]
+        [InlineData(PlayerServiceUtil.MAX_PLAYERS_PER_PAGE)]
+        [InlineData(PlayerServiceUtil.MAX_PLAYERS_PER_PAGE * 2)]
+        [InlineData(PlayerServiceUtil.MAX_PLAYERS_PER_PAGE * 3 - 1)]
+        [InlineData(PlayerServiceUtil.MAX_PLAYERS_PER_PAGE * 3)]
+        [InlineData(PlayerServiceUtil.MAX_PLAYERS_PER_PAGE * 3 + 1)]
         [Trait("PlayerService", "GetAll")]
         public void GetAll_Simple_Test(int playerListSize)
         {
@@ -26,7 +30,17 @@ namespace APIQuiz.Services.Tests
                 playerService.Create(player);
             }
 
-            Assert.Equal(playerListSize, playerService.GetAll().Count);
+            int expectedNumberOfPages = PlayerServiceUtil.HighestPageNumberCalculation(playerListSize);
+
+            for (int i = 1; i <= expectedNumberOfPages; i++)
+            {
+                int expectedFirstId = (i - 1) * PlayerServiceUtil.MAX_PLAYERS_PER_PAGE + 1;
+                int expectedAmountOfUsersInPage = PlayerServiceUtil.PlayerAmountCalculation(expectedFirstId - 1, playerListSize);
+
+                var getAllResult = playerService.GetAll(i);
+                Assert.Equal(expectedFirstId, getAllResult[0].Id);
+                Assert.Equal(expectedAmountOfUsersInPage, getAllResult.Count);
+            }
         }
 
         [Theory]
@@ -70,7 +84,7 @@ namespace APIQuiz.Services.Tests
             Player player = new() { Name = "new_player_name" };
             playerService.Create(player);
 
-            var players = playerService.GetAll();
+            var players = playerService.GetAll(1);
             var getResult = playerService.Get(player.Id);
             Assert.NotNull(getResult);
             Assert.Single(players);
@@ -85,7 +99,7 @@ namespace APIQuiz.Services.Tests
             Player player = new() { Id = 10, Name = "new_player_name" };
             playerService.Create(player);
 
-            var players = playerService.GetAll();
+            var players = playerService.GetAll(1);
             Assert.Single(players);
             Assert.Equal(1, players[0].Id);
         }
@@ -97,7 +111,7 @@ namespace APIQuiz.Services.Tests
             Player player = new() { Name = "new_player_name", Score = 100 };
             playerService.Create(player);
 
-            var players = playerService.GetAll();
+            var players = playerService.GetAll(1);
             Assert.Single(players);
             Assert.Equal(0, players[0].Score);
         }
@@ -109,11 +123,12 @@ namespace APIQuiz.Services.Tests
             Player player = new() { Name = "new_player_name" };
             playerService.Create(player);
 
-            var players = playerService.GetAll();
+            var players = playerService.GetAll(1);
             Assert.Single(players);
 
             playerService.Delete(player.Id);
 
+            players = playerService.GetAll(1);
             Assert.Empty(players);
             Assert.Null(playerService.Get(player.Id));
         }

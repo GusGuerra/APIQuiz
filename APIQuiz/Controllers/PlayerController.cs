@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using APIQuiz.Models;
 using APIQuiz.Services;
+using APIQuiz.Util;
 
 namespace APIQuiz.Controllers
 {
@@ -48,9 +49,9 @@ namespace APIQuiz.Controllers
         /// </summary>
         /// <returns> List of active players in json format </returns>
         [HttpGet]
-        public ActionResult<List<Player>> GetAllPlayers()
+        public IActionResult GetAllPlayers([FromQuery] int page = PlayerServiceUtil.DEFAULT_PAGE_NUMBER)
         {
-            return playerService.GetAll();
+            return Ok(playerService.GetAll(page));
         }
 
         /// <summary>
