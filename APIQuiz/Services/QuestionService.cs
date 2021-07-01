@@ -60,16 +60,14 @@ namespace APIQuiz.Services
         /// <returns>A question never before seen by the active player</returns>
         public async Task<Question> ViewNew(int activePlayerId)
         {
-            if (questions.Any() && questions.FirstOrDefault(q => !q.SeenBy.Contains(activePlayerId)) != null)
+            if (!questions.Any() || questions.FirstOrDefault(q => !q.SeenBy.Contains(activePlayerId)) == null)
             {
-                Question question = questions.FirstOrDefault(q => !q.SeenBy.Contains(activePlayerId));
-                question.SeenBy.Add(activePlayerId);
-                return question;
+                await GetNew();
             }
 
-            await GetNew(QuestionServiceUtil.DEFAULT_NEW_QUESTION_AMOUNT);
-
-            return await ViewNew(activePlayerId);
+            Question question = questions.FirstOrDefault(q => !q.SeenBy.Contains(activePlayerId));
+            question.SeenBy.Add(activePlayerId);
+            return question;
         }
 
         /// <summary>

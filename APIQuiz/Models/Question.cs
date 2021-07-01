@@ -7,8 +7,11 @@ namespace APIQuiz.Models
     {
         public List<int> SeenBy { get; set; }
         public int Id { get; set; }
+        [JsonPropertyName("category")]
         public string Category { get; set; }
+        [JsonPropertyName("type")]
         public string Type { get; set; }
+        [JsonPropertyName("difficulty")]
         public string Difficulty { get; set; }
         [JsonPropertyName("question")]
         public string Body { get; set; }
