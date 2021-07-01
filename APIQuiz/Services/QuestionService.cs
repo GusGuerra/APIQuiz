@@ -22,8 +22,14 @@ namespace APIQuiz.Services
         public QuestionService()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri(QuestionServiceUtil.BaseURL);
+            
+            UriBuilder uriBuilder = new();
+            uriBuilder.Scheme = QuestionServiceUtil.EXTERNAL_API_SCHEME;
+            uriBuilder.Host = QuestionServiceUtil.EXTERNAL_API_HOST;
+            client.BaseAddress = uriBuilder.Uri;
+
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            
             questions = new List<Question>();
             Token = null;
             NextId = 1;
@@ -38,13 +44,13 @@ namespace APIQuiz.Services
         {
             await CheckAndRetrieveToken();
 
-            string uri = QuestionServiceUtil.QuestionPath;
-            uri += "?" + QuestionServiceUtil.QuestionAmountParam + "=" + amount.ToString();
-            uri += "&" + QuestionServiceUtil.TokenParam + "=" + Token;
+            string uri = QuestionServiceUtil.EXTERNAL_API_PATH_QUESTION;
+            uri = QuestionServiceUtil.AddQuery(uri, QuestionServiceUtil.EXTERNAL_API_KEY_QUESTION_AMOUNT, amount.ToString());
+            uri = QuestionServiceUtil.AddQuery(uri, QuestionServiceUtil.EXTERNAL_API_KEY_TOKEN, Token);
 
-            var responseStream = client.GetStreamAsync(uri);
-            Response externalResponse = await JsonSerializer.DeserializeAsync<Response>(await responseStream);
-            
+            var responseStream = await client.GetStreamAsync(uri);
+            Response externalResponse = await JsonSerializer.DeserializeAsync<Response>(responseStream);
+
             var newQuestions = externalResponse.Result.ToList();
             newQuestions.ForEach(q => q.Id = GetAndUpdateNextId());
             newQuestions.ForEach(q => q.SeenBy = new List<int>());
@@ -54,7 +60,7 @@ namespace APIQuiz.Services
 
         /// <summary>
         /// Uses one of the questions from the database that the player haven't seen.
-        /// If there are none, gets new questions from the external API and calls itself again.
+        /// If there are none, gets new questions from the external API.
         /// </summary>
         /// <param name="activePlayerId"></param>
         /// <returns>A question never before seen by the active player</returns>
@@ -79,14 +85,17 @@ namespace APIQuiz.Services
             if (Token != null)
                 return;
 
-            string uri = QuestionServiceUtil.TokenPath;
-            uri += "?" + QuestionServiceUtil.TokenCommandParam + "=request";
+            string uri = QuestionServiceUtil.EXTERNAL_API_PATH_TOKEN;
+            uri = QuestionServiceUtil.AddQuery(
+                uri,
+                QuestionServiceUtil.EXTERNAL_API_KEY_COMMAND,
+                QuestionServiceUtil.EXTERNAL_API_VALUE_TOKEN_REQUEST);
 
             var responseStream = client.GetStreamAsync(uri);
             var response = await JsonSerializer.DeserializeAsync<Response>(await responseStream);
             Token = response.Token;
         }
-        
+
         private int GetAndUpdateNextId()
         {
             return NextId++;
