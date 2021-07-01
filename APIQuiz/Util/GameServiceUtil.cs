@@ -1,6 +1,6 @@
 ﻿namespace APIQuiz.Util
 {
-    public static class QuestionServiceUtil
+    public static class GameServiceUtil
     {
         public const int DEFAULT_NEW_QUESTION_AMOUNT = 1;
         public const string EXTERNAL_API_SCHEME = "https";

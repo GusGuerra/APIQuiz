@@ -11,6 +11,6 @@ namespace APIQuiz.Models
         [JsonPropertyName("response_message")]
         public string ResponseMessage { get; set; }
         [JsonPropertyName("results")]
-        public IEnumerable<Question> Result {get; set;}
+        public IEnumerable<Question> Result { get; set; }
     }
 }

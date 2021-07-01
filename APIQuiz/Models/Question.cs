@@ -19,5 +19,18 @@ namespace APIQuiz.Models
         public string CorrectAnswer { get; set; }
         [JsonPropertyName("incorrect_answers")]
         public IEnumerable<string> IncorrectAnswers { get; set; }
+        
+        public PlayerFriendlyQuestion GenerateUserFriendlyQuestion()
+        {
+            PlayerFriendlyQuestion playerFriendlyQuestion = new();
+            playerFriendlyQuestion.Body = Body;
+            playerFriendlyQuestion.Category = Category;
+            playerFriendlyQuestion.Difficulty = Difficulty;
+            playerFriendlyQuestion.Alternatives = (List<string>)IncorrectAnswers;
+            playerFriendlyQuestion.Alternatives.Add(CorrectAnswer);
+            playerFriendlyQuestion.Alternatives.Sort();
+
+            return playerFriendlyQuestion;
+        }
     }
 }

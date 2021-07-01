@@ -9,5 +9,10 @@
         {
             Name = updatedPlayer.Name;
         }
+
+        public void IncreaseScore()
+        {
+            Score += 1;
+        }
     }
 }
