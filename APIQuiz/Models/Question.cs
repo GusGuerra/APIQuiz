@@ -1,11 +1,14 @@
 ﻿using System.Text.Json.Serialization;
 using System.Collections.Generic;
+using System;
 
 namespace APIQuiz.Models
 {
     public class Question
     {
+        [JsonIgnore]
         public List<int> SeenBy { get; set; }
+        [JsonIgnore]
         public int Id { get; set; }
         [JsonPropertyName("category")]
         public string Category { get; set; }
@@ -26,7 +29,7 @@ namespace APIQuiz.Models
             playerFriendlyQuestion.Body = Body;
             playerFriendlyQuestion.Category = Category;
             playerFriendlyQuestion.Difficulty = Difficulty;
-            playerFriendlyQuestion.Alternatives = (List<string>)IncorrectAnswers;
+            playerFriendlyQuestion.Alternatives = new((List<string>)IncorrectAnswers);
             playerFriendlyQuestion.Alternatives.Add(CorrectAnswer);
             playerFriendlyQuestion.Alternatives.Sort();
 

@@ -15,12 +15,14 @@ namespace APIQuiz.Services
     /// </summary>
     public class GameService
     {
+        private static readonly GameService GameServiceInstance = new();
+        public static GameService Singleton() => GameServiceInstance;
         private readonly HttpClient client;
         private List<Question> questions;
         private Dictionary<int, Question> activeQuestion;
         private string Token { get; set; }
         private int NextId {get; set;}
-        public GameService()
+        private GameService()
         {
             client = new HttpClient();
             
@@ -66,7 +68,7 @@ namespace APIQuiz.Services
         /// </summary>
         /// <param name="activePlayerId"></param>
         /// <returns>A question never before seen by the active player</returns>
-        public async Task<Question> ViewNew(int activePlayerId, bool isNewQuestion = false)
+        public async Task<Question> ViewNew(int activePlayerId, bool isNewQuestion = GameServiceUtil.DEFAULT_NEW_QUESTION_OPTION)
         {
             if (!isNewQuestion)
             {
@@ -91,12 +93,25 @@ namespace APIQuiz.Services
         /// <param name="playerAnswer"></param>
         /// <param name="player"></param>
         /// <returns>True if the player's answer is correct. Otherwise, false.</returns>
-        public bool ComparePlayerAnswer(string playerAnswer, Player player)
+        public bool ComparePlayerAnswer(string playerAnswer, int playerId)
         {
-            Question question = activeQuestion[player.Id];
+            Question question = activeQuestion[playerId];
             bool verdict = (question.CorrectAnswer == playerAnswer);
-            activeQuestion[player.Id] = null;
+            activeQuestion[playerId] = null;
             return verdict;
+        }
+
+        /// <summary>
+        /// Checks if the player has an active question
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns>True if there is an active question for the player. Otherwise, false.</returns>
+        public bool HasActiveQuestion(int playerId)
+        {
+            if (!activeQuestion.ContainsKey(playerId))
+                return false;
+
+            return activeQuestion[playerId] != null;
         }
 
         /// <summary>
@@ -114,8 +129,9 @@ namespace APIQuiz.Services
                 GameServiceUtil.EXTERNAL_API_KEY_COMMAND,
                 GameServiceUtil.EXTERNAL_API_VALUE_TOKEN_REQUEST);
 
-            var responseStream = client.GetStreamAsync(uri);
-            var response = await JsonSerializer.DeserializeAsync<Response>(await responseStream);
+            var responseStream = await client.GetStreamAsync(uri);
+            var response = await JsonSerializer.DeserializeAsync<Response>(responseStream);
+
             Token = response.Token;
         }
 

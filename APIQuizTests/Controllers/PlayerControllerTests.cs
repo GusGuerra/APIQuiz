@@ -59,24 +59,18 @@ namespace APIQuiz.Controllers.Tests
             Assert.Equal(404, notFoundResult.StatusCode);
         }
 
-        [Theory]
-        [InlineData(1, 1)]
-        [InlineData(4, 2)]
-        [InlineData(7, 5)]
+        [Fact]
         [Trait("Controller", "GetPlayerById")]
-        public void GetPlayerById_Valid_Test(int playerListSize, int id)
+        public void GetPlayerById_Valid_Test()
         {
-            for (int i = 0; i < playerListSize; i++)
-            {
-                Player player = new() { Name = "new_player_name" };
-                playerController.CreateNewPlayer(player);
-            }
-
-            var getPlayerByIdValue = playerController.GetPlayerById(id).Value;
-
+            Player player = new() { Name = "new_player_name" };
+            
+            playerController.CreateNewPlayer(player);
+            var getPlayerByIdValue = playerController.GetPlayerById(player.Id).Value;
+            
             Assert.NotNull(getPlayerByIdValue);
             Assert.IsType<Player>(getPlayerByIdValue);
-            Assert.Equal(id, getPlayerByIdValue.Id);
+            Assert.Equal(player.Id, getPlayerByIdValue.Id);
         }
 
         [Fact]

@@ -10,9 +10,10 @@ namespace APIQuiz.Controllers
     [Route("api/players")]
     public class PlayerController : ControllerBase
     {
-        private static PlayerService playerService = new();
+        private PlayerService playerService;
         public PlayerController()
         {
+            playerService = PlayerService.Singleton();
         }
 
         /// <summary>
@@ -24,7 +25,9 @@ namespace APIQuiz.Controllers
         public IActionResult CreateNewPlayer(Player player)
         {
             if (!PlayerService.HasValidName(player))
+            {
                 return BadRequest();
+            }
 
             playerService.Create(player);
             return CreatedAtAction(nameof(CreateNewPlayer), new { id = player.Id }, player);
@@ -38,10 +41,7 @@ namespace APIQuiz.Controllers
         [HttpGet("{id}")]
         public ActionResult<Player> GetPlayerById(int id)
         {
-            if (!playerService.Exists(id))
-                return NotFound();
-
-            return playerService.Get(id);
+            return !playerService.Exists(id) ? NotFound() : playerService.Get(id);
         }
 
         /// <summary>
@@ -64,11 +64,15 @@ namespace APIQuiz.Controllers
         public IActionResult UpdatePlayerById(int id, Player updatedPlayer)
         {
             if (!PlayerService.HasValidName(updatedPlayer))
+            {
                 return BadRequest();
+            }
 
             if (!playerService.Exists(id))
+            {
                 return NotFound();
-            
+            }
+
             playerService.Update(id, updatedPlayer);
 
             return Ok();
@@ -83,7 +87,9 @@ namespace APIQuiz.Controllers
         public IActionResult DeletePlayerById(int id)
         {
             if (!playerService.Exists(id))
+            {
                 return NotFound();
+            }
 
             playerService.Delete(id);
 

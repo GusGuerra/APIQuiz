@@ -7,9 +7,11 @@ namespace APIQuiz.Services
 {
     public class PlayerService
     {
+        private static readonly PlayerService PlayerServiceInstance = new();
+        public static PlayerService Singleton() => PlayerServiceInstance;
         private List<Player> Players { get; }
         private int NextId = 1;
-        public PlayerService()
+        private PlayerService()
         {
             Players = new List<Player>();
         }
@@ -69,6 +71,24 @@ namespace APIQuiz.Services
         {
             var index = Players.FindIndex(p => p.Id == id);
             Players[index].CopyUpdatedDataFrom(player);
+        }
+
+        /// <summary>
+        /// Builds and returns the specified page of the player ranking
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns>A list of players ordered by highest score</returns>
+        public List<Player> GetRanking(int page)
+        {
+            List<Player> rankingPage = new(Players);
+            rankingPage.Sort((p1, p2) => p1.Score > p2.Score ? -1 : p1.Score == p2.Score ? 0 : 1);
+
+            page = PlayerServiceUtil.PageNumberAdjustment(page, Players.Count);
+
+            int firstIndexInPage = (page - 1) * PlayerServiceUtil.MAX_PLAYERS_PER_PAGE;
+            int playerAmount = PlayerServiceUtil.PlayerAmountCalculation(firstIndexInPage, Players.Count);
+
+            return rankingPage;
         }
 
         /// <summary>

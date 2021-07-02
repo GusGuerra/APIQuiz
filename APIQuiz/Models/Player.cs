@@ -10,6 +10,9 @@
             Name = updatedPlayer.Name;
         }
 
+        /// <summary>
+        /// Increases player score and updates the ranking
+        /// </summary>
         public void IncreaseScore()
         {
             Score += 1;
