@@ -5,6 +5,12 @@
         public const int DEFAULT_PAGE_NUMBER = 1;
         public const int MAX_PLAYERS_PER_PAGE = 5;
         public const int MAX_PLAYER_NUMBER = 1000;
+        public const int POINTS_PER_CORRECT_ANSWER = 10;
+        public const int POINTS_PER_INCORRECT_ANSWER = 0;
+        public const int FIRST_STREAK_THRESHOLD = 3;
+        public const int FIRST_STREAK_POINTS = 15;
+        public const int SECOND_STREAK_THRESHOLD = 5;
+        public const int SECOND_STREAK_POINTS = 20;
 
         /// <summary>
         /// Checks for page numbers out of bounds.

@@ -32,14 +32,15 @@ namespace APIQuiz.Controllers
                 return BadRequest();
             }
 
+            var player = playerService.Get(id);
             if (gameService.ComparePlayerAnswer(playerAnswer.Answer, id))
             {
-                var player = playerService.Get(id);
-                player.IncreaseScore();
+                player.IncreaseScore(PlayerServiceUtil.POINTS_PER_CORRECT_ANSWER);
 
                 return Ok(new string(@"Correct! :)"));
             }
 
+            player.IncreaseScore(PlayerServiceUtil.POINTS_PER_INCORRECT_ANSWER);
             return Ok(new string(@"Incorrect! :("));
         }
 
