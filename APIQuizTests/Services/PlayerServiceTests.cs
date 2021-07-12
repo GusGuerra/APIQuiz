@@ -174,5 +174,29 @@ namespace APIQuiz.Services.Tests
             Player player = new() { Name = name };
             Assert.False(PlayerService.HasValidName(player));
         }
+
+        [Theory]
+        [InlineData("valid_passwd")]
+        [InlineData("yetAnotherCorrectPassw0rd")]
+        [InlineData("usingNonConsecutiveNumbers457")]
+        [Trait("PlayerService", "HasValidPassword")]
+        public void IsValidPassword_True_Test(string password)
+        {
+            Assert.True(PlayerService.IsValidPassword(password));
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        [InlineData("ab")]
+        [InlineData("password_123")]
+        [InlineData("dontUseTheWordPassword")]
+        [InlineData("dontUseThreeConsecutiveNumbers456")]
+        [Trait("PlayerService", "HasValidPassword")]
+        public void IsValidPassword_False_Test(string password)
+        {
+            Assert.False(PlayerService.IsValidPassword(password));
+        }
     }
 }

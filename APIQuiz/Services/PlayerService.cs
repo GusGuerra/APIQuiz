@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using APIQuiz.Models;
 using APIQuiz.Util;
@@ -128,6 +129,39 @@ namespace APIQuiz.Services
         public static bool HasValidName(Player player)
         {
             return !string.IsNullOrEmpty(player.Name) && !string.IsNullOrWhiteSpace(player.Name);
+        }
+
+        /// <summary>
+        /// Checks is the password is secure enough
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns> True if the password is considered safe; Otherwise, false </returns>
+        public static bool IsValidPassword(string password)
+        {
+
+            if (string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+
+            if (password.Length < PlayerServiceUtil.MINIMUM_PASSWORD_LENGTH)
+            {
+                return false;
+            }
+
+            if (PlayerServiceUtil.CheckThreeConsecutiveDigitsSubstring(password))
+            {
+                return false;
+            }
+
+            string lowerCasePassword = password.ToLower();
+
+            if (lowerCasePassword.Contains("password"))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

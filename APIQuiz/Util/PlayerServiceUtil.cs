@@ -11,6 +11,7 @@
         public const int FIRST_STREAK_POINTS = 15;
         public const int SECOND_STREAK_THRESHOLD = 5;
         public const int SECOND_STREAK_POINTS = 20;
+        public const int MINIMUM_PASSWORD_LENGTH = 3;
 
         /// <summary>
         /// Checks for page numbers out of bounds.
@@ -69,6 +70,33 @@
             }
             
             return MAX_PLAYERS_PER_PAGE;
+        }
+
+        /// <summary>
+        /// Checks if a string has three consecutives digits as a substring
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns> True is the input string has three consecutive digits as a substring; Otherwise false </returns>
+        public static bool CheckThreeConsecutiveDigitsSubstring(string str)
+        {
+            if (str.Length < 3)
+            {
+                return false;
+            }
+
+            for (int i = 0; i <= str.Length - 3; i++)
+            {
+                if (char.IsDigit(str[i]) && char.IsDigit(str[i + 1]) && char.IsDigit(str[i + 2]))
+                {
+                    if ((int)char.GetNumericValue(str[i]) + 1 == (int)char.GetNumericValue(str[i + 1]) &&
+                        (int)char.GetNumericValue(str[i + 1]) + 1 == (int)char.GetNumericValue(str[i + 2]))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
