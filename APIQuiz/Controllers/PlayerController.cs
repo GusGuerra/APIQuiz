@@ -22,15 +22,22 @@ namespace APIQuiz.Controllers
         /// <param name="player"></param>
         /// <returns> Created object in json format </returns>
         [HttpPost]
-        public IActionResult CreateNewPlayer(Player player)
+        public IActionResult CreateNewPlayer(UserCreatedPlayer userCreatedPlayer)
         {
-            if (!PlayerService.HasValidName(player))
+            if (!PlayerService.HasValidName(userCreatedPlayer.Name))
+            {
+                return BadRequest();
+            }
+            
+            if (!PlayerService.IsValidPassword(userCreatedPlayer.Password))
             {
                 return BadRequest();
             }
 
-            playerService.Create(player);
-            return CreatedAtAction(nameof(CreateNewPlayer), new { id = player.Id }, player);
+            int playerId = playerService.Create(userCreatedPlayer);
+            Player player = playerService.Get(playerId);
+
+            return CreatedAtAction(nameof(CreateNewPlayer), new { id = playerId }, player);
         }
 
         /// <summary>
@@ -63,7 +70,7 @@ namespace APIQuiz.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdatePlayerById(int id, Player updatedPlayer)
         {
-            if (!PlayerService.HasValidName(updatedPlayer))
+            if (!PlayerService.HasValidName(updatedPlayer.Name))
             {
                 return BadRequest();
             }

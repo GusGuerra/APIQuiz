@@ -11,10 +11,12 @@ namespace APIQuiz.Services
         private static readonly PlayerService PlayerServiceInstance = new();
         public static PlayerService Singleton() => PlayerServiceInstance;
         private List<Player> Players { get; }
+        private Dictionary<int, string> Passwords { get; }
         private int NextId = 1;
         private PlayerService()
         {
             Players = new List<Player>();
+            Passwords = new Dictionary<int, string>();
         }
 
         /// <summary>
@@ -46,12 +48,16 @@ namespace APIQuiz.Services
         /// Adds a new player to the game
         /// </summary>
         /// <param name="player"></param>
-        public void Create(Player player)
+        public int Create(UserCreatedPlayer userCreatedPlayer)
         {
+            Player player = userCreatedPlayer.GeneratePlayer();
             player.Id = GetAndUpdateNextId();
             player.Score = 0;
 
+            Passwords.Add(player.Id, userCreatedPlayer.Password);
             Players.Add(player);
+
+            return player.Id;
         }
 
         /// <summary>
@@ -126,9 +132,9 @@ namespace APIQuiz.Services
         /// </summary>
         /// <param name="player"></param>
         /// <returns> True if the player has a valid name; Otherwise, false </returns>
-        public static bool HasValidName(Player player)
+        public static bool HasValidName(string playerName)
         {
-            return !string.IsNullOrEmpty(player.Name) && !string.IsNullOrWhiteSpace(player.Name);
+            return !string.IsNullOrEmpty(playerName) && !string.IsNullOrWhiteSpace(playerName);
         }
 
         /// <summary>

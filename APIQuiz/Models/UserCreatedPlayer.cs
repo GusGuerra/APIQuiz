@@ -11,7 +11,7 @@ namespace APIQuiz.Models
         {
             Player player = new() { };
             player.Name = Name;
-
+            
             return player;
         }
     }

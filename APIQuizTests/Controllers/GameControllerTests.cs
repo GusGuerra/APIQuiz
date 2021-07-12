@@ -22,12 +22,16 @@ namespace APIQuiz.Controllers.Tests
         [Trait("GameController", "GetAnswer")]
         public async Task GetAnswer_Valid_Test()
         {
-            Player player = new() { Name = "new_player_name" };
-            _ = playerController.CreateNewPlayer(player);
-            _ = await gameController.View("question", 0, player.Id, true);
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
+
+            var createNewPlayerResult = playerController.CreateNewPlayer(player);
+            var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
+            var createdPlayer = createdAtActionResult.Value as Player;
+
+            _ = await gameController.View("question", 0, createdPlayer.Id, true);
 
             PlayerAnswer playerAnswer = new() { Answer = "True" };
-            var getAnswerResult = gameController.GetAnswer(player.Id, playerAnswer);
+            var getAnswerResult = gameController.GetAnswer(createdPlayer.Id, playerAnswer);
             var okResult = getAnswerResult as OkObjectResult;
 
             Assert.NotNull(okResult);
@@ -38,9 +42,13 @@ namespace APIQuiz.Controllers.Tests
         [Trait("GameController", "View")]
         public async Task View_QuestionValid_TestAsync()
         {
-            Player player = new() { Name = "new_player_name" };
-            playerController.CreateNewPlayer(player);
-            var viewResult = await gameController.View("question", 0, player.Id, true) as OkObjectResult;
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
+            
+            var createNewPlayerResult = playerController.CreateNewPlayer(player);
+            var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
+            var createdPlayer = createdAtActionResult.Value as Player;
+            
+            var viewResult = await gameController.View("question", 0, createdPlayer.Id, true) as OkObjectResult;
             var question = viewResult.Value;
 
             Assert.IsType<PlayerFriendlyQuestion>(question);
@@ -50,8 +58,8 @@ namespace APIQuiz.Controllers.Tests
         [Trait("GameController", "View")]
         public async Task View_RankingValid_TestAsync()
         {
-            Player player = new() { Name = "new_player_name" };
-            playerController.CreateNewPlayer(player);
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
+            _ = playerController.CreateNewPlayer(player);
             var viewResult = await gameController.View("ranking", 1, 0, GameServiceUtil.DEFAULT_NEW_QUESTION_OPTION) as OkObjectResult;
             var ranking = viewResult.Value;
 
