@@ -1,7 +1,6 @@
 ﻿using APIQuiz.Models;
 using APIQuiz.Util;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace APIQuiz.Controllers.Tests
@@ -106,7 +105,7 @@ namespace APIQuiz.Controllers.Tests
             var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
             var createdPlayer = createdAtActionResult.Value as Player;
             
-            Player updatedPlayer = new() { Id = 999, Name = "new_player_name", Score = 999};
+            UserCreatedPlayer updatedPlayer = new() { Name = "new_player_name", Password = "randomPasswd"};
             var updatePlayerByIdResult = playerController.UpdatePlayerById(createdPlayer.Id, updatedPlayer);
             var okResult = updatePlayerByIdResult as OkResult;
 
@@ -121,7 +120,7 @@ namespace APIQuiz.Controllers.Tests
             UserCreatedPlayer player = new() { Name = "old_player_name", Password = "randomPasswd" };
             _ = playerController.CreateNewPlayer(player);
 
-            Player updatedPlayer = new() { Id = 1, Name = "new_player_name" };
+            UserCreatedPlayer updatedPlayer = new() { Name = "new_player_name", Password = "randomPasswd" };
             var updatePlayerByIdResult = playerController.UpdatePlayerById(PlayerServiceUtil.MAX_PLAYER_NUMBER + 1, updatedPlayer);
             var notFoundResult = updatePlayerByIdResult as NotFoundResult;
             
@@ -140,8 +139,8 @@ namespace APIQuiz.Controllers.Tests
             var createNewPlayerResult = playerController.CreateNewPlayer(player);
             var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
             var createdPlayer = createdAtActionResult.Value as Player;
-            
-            Player updatedPlayer = new() { Id = 999, Name = name, Score = 999 };
+
+            UserCreatedPlayer updatedPlayer = new() { Name = name, Password = "randomPasswd" };
             var updatePlayerByIdResult = playerController.UpdatePlayerById(createdPlayer.Id, updatedPlayer);
             var badRequestResult = updatePlayerByIdResult as BadRequestResult;
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using APIQuiz.Models;
 using APIQuiz.Services;
 using APIQuiz.Util;
@@ -24,12 +23,12 @@ namespace APIQuiz.Controllers
         [HttpPost]
         public IActionResult CreateNewPlayer(UserCreatedPlayer userCreatedPlayer)
         {
-            if (!PlayerService.HasValidName(userCreatedPlayer.Name))
+            if (!PlayerServiceUtil.IsValidName(userCreatedPlayer.Name))
             {
                 return BadRequest();
             }
             
-            if (!PlayerService.IsValidPassword(userCreatedPlayer.Password))
+            if (!PlayerServiceUtil.IsValidPassword(userCreatedPlayer.Password))
             {
                 return BadRequest();
             }
@@ -68,16 +67,18 @@ namespace APIQuiz.Controllers
         /// <param name="updatedPlayer"></param>
         /// <returns> No content </returns>
         [HttpPut("{id}")]
-        public IActionResult UpdatePlayerById(int id, Player updatedPlayer)
+        public IActionResult UpdatePlayerById(int id, UserCreatedPlayer updatedPlayer)
         {
-            if (!PlayerService.HasValidName(updatedPlayer.Name))
-            {
-                return BadRequest();
-            }
-
             if (!playerService.Exists(id))
             {
                 return NotFound();
+            }
+
+            // TODO: Check password
+            
+            if (!PlayerServiceUtil.IsValidName(updatedPlayer.Name))
+            {
+                return BadRequest();
             }
 
             playerService.Update(id, updatedPlayer);

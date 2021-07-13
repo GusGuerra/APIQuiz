@@ -45,12 +45,14 @@ namespace APIQuiz.Services
         public Player Get(int id) => Players.FirstOrDefault(p => p.Id == id);
 
         /// <summary>
-        /// Adds a new player to the game
+        /// Adds a new player to the active player list
         /// </summary>
-        /// <param name="player"></param>
+        /// <param name="userCreatedPlayer"></param>
+        /// <returns> The id of the created player </returns>
         public int Create(UserCreatedPlayer userCreatedPlayer)
         {
             Player player = userCreatedPlayer.GeneratePlayer();
+
             player.Id = GetAndUpdateNextId();
             player.Score = 0;
 
@@ -74,10 +76,13 @@ namespace APIQuiz.Services
         /// Updates a player's name 
         /// </summary>
         /// <param name="player"></param>
-        public void Update(int id, Player player)
+        public void Update(int id, UserCreatedPlayer updatedPlayer)
         {
             var index = Players.FindIndex(p => p.Id == id);
-            Players[index].CopyUpdatedDataFrom(player);
+
+            Player player = updatedPlayer.GeneratePlayer();
+
+            Players[index].CopyDataFrom(player);
         }
 
         /// <summary>
@@ -125,49 +130,6 @@ namespace APIQuiz.Services
         {
             var player = Get(id);
             return player != null;
-        }
-
-        /// <summary>
-        /// Checks if the specified player has a valid name
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns> True if the player has a valid name; Otherwise, false </returns>
-        public static bool HasValidName(string playerName)
-        {
-            return !string.IsNullOrEmpty(playerName) && !string.IsNullOrWhiteSpace(playerName);
-        }
-
-        /// <summary>
-        /// Checks is the password is secure enough
-        /// </summary>
-        /// <param name="password"></param>
-        /// <returns> True if the password is considered safe; Otherwise, false </returns>
-        public static bool IsValidPassword(string password)
-        {
-
-            if (string.IsNullOrEmpty(password))
-            {
-                return false;
-            }
-
-            if (password.Length < PlayerServiceUtil.MINIMUM_PASSWORD_LENGTH)
-            {
-                return false;
-            }
-
-            if (PlayerServiceUtil.CheckThreeConsecutiveDigitsSubstring(password))
-            {
-                return false;
-            }
-
-            string lowerCasePassword = password.ToLower();
-
-            if (lowerCasePassword.Contains("password"))
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

@@ -73,6 +73,49 @@
         }
 
         /// <summary>
+        /// Checks if the specified player has a valid name
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns> True if the player has a valid name; Otherwise, false </returns>
+        public static bool IsValidName(string playerName)
+        {
+            return !string.IsNullOrEmpty(playerName) && !string.IsNullOrWhiteSpace(playerName);
+        }
+
+        /// <summary>
+        /// Checks is a password is secure enough
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns> True if the password is considered safe; Otherwise, false </returns>
+        public static bool IsValidPassword(string password)
+        {
+
+            if (string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+
+            if (password.Length < MINIMUM_PASSWORD_LENGTH)
+            {
+                return false;
+            }
+
+            if (CheckThreeConsecutiveDigitsSubstring(password))
+            {
+                return false;
+            }
+
+            string lowerCasePassword = password.ToLower();
+
+            if (lowerCasePassword.Contains("password"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Checks if a string has three consecutives digits as a substring
         /// </summary>
         /// <param name="str"></param>

@@ -1,5 +1,4 @@
-﻿using APIQuiz.Controllers;
-using APIQuiz.Models;
+﻿using APIQuiz.Models;
 using APIQuiz.Util;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;

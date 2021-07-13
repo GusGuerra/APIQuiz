@@ -1,7 +1,6 @@
 ﻿using Xunit;
 using APIQuiz.Util;
 using APIQuiz.Models;
-using System.Collections.Generic;
 
 namespace APIQuiz.Services.Tests
 {
@@ -56,7 +55,7 @@ namespace APIQuiz.Services.Tests
         public void Get_InvalidId_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
-            playerService.Create(player);
+            _ = playerService.Create(player);
 
             Player getResult = playerService.Get(PlayerServiceUtil.MAX_PLAYER_NUMBER);
             Assert.Null(getResult);
@@ -78,7 +77,7 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Delete")]
         public void Delete_Simple_Test()
         {
-            UserCreatedPlayer player = new() { Name = "new_player_name" };
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
             int playerId = playerService.Create(player);
 
             Assert.True(playerService.Exists(playerId));
@@ -96,12 +95,12 @@ namespace APIQuiz.Services.Tests
             UserCreatedPlayer player = new() { Name = "old_player_name", Password = "randomPasswd"};
             int playerId = playerService.Create(player);
 
-            Player updatedPlayer = new() { Id = 10, Name = "new_player_name", Score = 999 };
+            UserCreatedPlayer updatedPlayer = new() { Name = "new_player_name", Password = "randomPasswd" };
             playerService.Update(playerId, updatedPlayer);
 
             var getResult = playerService.Get(playerId);
+
             Assert.Equal(updatedPlayer.Name, getResult.Name);
-            Assert.Equal(0, getResult.Score);
             Assert.Equal(playerId, getResult.Id);
         }
 
@@ -128,50 +127,6 @@ namespace APIQuiz.Services.Tests
             }
 
             Assert.False(playerService.Exists(PlayerServiceUtil.MAX_PLAYER_NUMBER));
-        }
-
-        [Theory]
-        [InlineData(".")]
-        [InlineData("a")]
-        [InlineData("name with spaces")]
-        [Trait("PlayerService", "HasValidName")]
-        public void HasValidName_True_Test(string name)
-        {
-            Assert.True(PlayerService.HasValidName(name));
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
-        [Trait("PlayerService", "HasValidName")]
-        public void HasValidName_False_Test(string name)
-        {
-            Assert.False(PlayerService.HasValidName(name));
-        }
-
-        [Theory]
-        [InlineData("valid_passwd")]
-        [InlineData("yetAnotherCorrectPassw0rd")]
-        [InlineData("usingNonConsecutiveNumbers457")]
-        [Trait("PlayerService", "HasValidPassword")]
-        public void IsValidPassword_True_Test(string password)
-        {
-            Assert.True(PlayerService.IsValidPassword(password));
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData(null)]
-        [InlineData("ab")]
-        [InlineData("password_123")]
-        [InlineData("dontUseTheWordPassword")]
-        [InlineData("dontUseThreeConsecutiveNumbers456")]
-        [Trait("PlayerService", "HasValidPassword")]
-        public void IsValidPassword_False_Test(string password)
-        {
-            Assert.False(PlayerService.IsValidPassword(password));
         }
     }
 }
