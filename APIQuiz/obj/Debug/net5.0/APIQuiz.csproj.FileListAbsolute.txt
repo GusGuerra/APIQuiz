@@ -20,3 +20,4 @@ C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.dll
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\ref\APIQuiz.dll
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.pdb
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.genruntimeconfig.cache
+C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.csproj.AssemblyReference.cache

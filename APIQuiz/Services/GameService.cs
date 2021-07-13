@@ -82,6 +82,12 @@ namespace APIQuiz.Services
 
             Question question = questions.FirstOrDefault(q => !q.SeenBy.Contains(activePlayerId));
             question.SeenBy.Add(activePlayerId);
+
+            if (!activeQuestion.ContainsKey(activePlayerId))
+            {
+                activeQuestion.Add(activePlayerId, question);
+            }
+            
             activeQuestion[activePlayerId] = question;
 
             return question;
