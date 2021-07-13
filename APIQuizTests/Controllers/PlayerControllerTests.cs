@@ -17,7 +17,7 @@ namespace APIQuiz.Controllers.Tests
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        [Trait("Controller", "CreateNewPlayer")]
+        [Trait("PlayerController", "CreateNewPlayer")]
         public void CreateNewPlayer_InvalidName_Test(string name)
         {
             UserCreatedPlayer player = new() { Name = name, Password = "randomPasswd"};
@@ -37,7 +37,7 @@ namespace APIQuiz.Controllers.Tests
         [InlineData("password_123")]
         [InlineData("dontUseTheWordPassword")]
         [InlineData("dontUseThreeConsecutiveNumbers456")]
-        [Trait("Controller", "CreateNewPlayer")]
+        [Trait("PlayerController", "CreateNewPlayer")]
         public void CreateNewPlayer_InvalidPassword_Test(string password)
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = password };
@@ -53,7 +53,7 @@ namespace APIQuiz.Controllers.Tests
         [InlineData("normal_name")]
         [InlineData("name with $ymb0ls!")]
         [InlineData("name with spaces")]
-        [Trait("Controller", "CreateNewPlayer")]
+        [Trait("PlayerController", "CreateNewPlayer")]
         public void CreateNewPlayer_Valid_Test(string name)
         {
             UserCreatedPlayer player = new() { Name = name, Password = "randomPasswd" };
@@ -66,7 +66,7 @@ namespace APIQuiz.Controllers.Tests
         }
 
         [Fact]
-        [Trait("Controller", "GetPlayerById")]
+        [Trait("PlayerController", "GetPlayerById")]
         public void GetPlayerById_Invalid_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
@@ -80,7 +80,7 @@ namespace APIQuiz.Controllers.Tests
         }
 
         [Fact]
-        [Trait("Controller", "GetPlayerById")]
+        [Trait("PlayerController", "GetPlayerById")]
         public void GetPlayerById_Valid_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
@@ -96,7 +96,7 @@ namespace APIQuiz.Controllers.Tests
         }
 
         [Fact]
-        [Trait("Controller", "UpdatePlayerById")]
+        [Trait("PlayerController", "UpdatePlayerById")]
         public void UpdatePlayerById_Valid_Test()
         {
             UserCreatedPlayer player = new() { Name = "old_player_name", Password = "randomPasswd" };
@@ -114,7 +114,7 @@ namespace APIQuiz.Controllers.Tests
         }
 
         [Fact]
-        [Trait("Controller", "UpdatePlayerById")]
+        [Trait("PlayerController", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidId_Test()
         {
             UserCreatedPlayer player = new() { Name = "old_player_name", Password = "randomPasswd" };
@@ -131,7 +131,7 @@ namespace APIQuiz.Controllers.Tests
         [Theory]
         [InlineData(" ")]
         [InlineData(null)]
-        [Trait("Controller", "UpdatePlayerById")]
+        [Trait("PlayerController", "UpdatePlayerById")]
         public void UpdatePlayerById_InvalidName_Test(string name)
         {
             UserCreatedPlayer player = new() { Name = "old_player_name", Password = "randomPasswd" };
@@ -149,7 +149,25 @@ namespace APIQuiz.Controllers.Tests
         }
 
         [Fact]
-        [Trait("Controller", "DeletePlayerById")]
+        [Trait("PlayerController", "UpdatePlayerById")]
+        public void UpdatePlayerById_InvalidPassword_Test()
+        {
+            UserCreatedPlayer player = new() { Name = "old_player_name", Password = "correctPasswd" };
+
+            var createNewPlayerResult = playerController.CreateNewPlayer(player);
+            var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
+            var createdPlayer = createdAtActionResult.Value as Player;
+
+            UserCreatedPlayer updatedPlayer = new() { Name = "new_player_name", Password = "incorrectPasswd" };
+            var updatePlayerByIdResult = playerController.UpdatePlayerById(createdPlayer.Id, updatedPlayer);
+            var forbiddenResult = updatePlayerByIdResult as StatusCodeResult;
+
+            Assert.NotNull(forbiddenResult);
+            Assert.Equal(403, forbiddenResult.StatusCode);
+        }
+
+        [Fact]
+        [Trait("PlayerController", "DeletePlayerById")]
         public void DeletePlayerById_Valid_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
@@ -166,7 +184,7 @@ namespace APIQuiz.Controllers.Tests
         }
 
         [Fact]
-        [Trait("Controller", "DeletePlayerById")]
+        [Trait("PlayerController", "DeletePlayerById")]
         public void DeletePlayerById_InvalidPlayer_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd"};

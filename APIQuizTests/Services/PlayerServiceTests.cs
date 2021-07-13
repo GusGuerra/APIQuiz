@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using APIQuiz.Services;
+using Xunit;
 using APIQuiz.Util;
 using APIQuiz.Models;
 
@@ -92,7 +93,7 @@ namespace APIQuiz.Services.Tests
         [Trait("PlayerService", "Update")]
         public void Update_Simple_Test()
         {
-            UserCreatedPlayer player = new() { Name = "old_player_name", Password = "randomPasswd"};
+            UserCreatedPlayer player = new() { Name = "old_player_name", Password = "randomPasswd" };
             int playerId = playerService.Create(player);
 
             UserCreatedPlayer updatedPlayer = new() { Name = "new_player_name", Password = "randomPasswd" };
@@ -112,6 +113,32 @@ namespace APIQuiz.Services.Tests
             int playerId = playerService.Create(player);
 
             Assert.True(playerService.Exists(playerId));
+        }
+
+        [Fact]
+        [Trait("PlayerService", "CheckPassword")]
+        public void CheckPassword_True_Test()
+        {
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
+            int playerId = playerService.Create(player);
+
+            Assert.True(playerService.CheckPassword(playerId, player.Password));
+        }
+
+        [Theory]
+        [InlineData("AttemptOne")]
+        [InlineData("AttemptTwo")]
+        [InlineData("incorrectPasswd")]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        [Trait("PlayerService", "CheckPassword")]
+        public void CheckPassword_False_Test(string password)
+        {
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "correctPasswd" };
+            int playerId = playerService.Create(player);
+
+            Assert.False(playerService.CheckPassword(playerId, password));
         }
 
         [Theory]

@@ -74,7 +74,10 @@ namespace APIQuiz.Controllers
                 return NotFound();
             }
 
-            // TODO: Check password
+            if(!playerService.CheckPassword(id, updatedPlayer.Password))
+            {
+                return StatusCode(403);
+            }
             
             if (!PlayerServiceUtil.IsValidName(updatedPlayer.Name))
             {

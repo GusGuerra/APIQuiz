@@ -103,6 +103,15 @@ namespace APIQuiz.Services
             return rankingPage;
         }
 
+        public bool CheckPassword(int playerId, string userInput)
+        {
+            if (!Passwords.ContainsKey(playerId))
+            {
+                return false;
+            }
+            return Passwords[playerId] == userInput;
+        }
+
         /// <summary>
         /// Gets the next id and updates its value
         /// </summary>
