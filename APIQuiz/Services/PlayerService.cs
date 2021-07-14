@@ -103,12 +103,14 @@ namespace APIQuiz.Services
             return rankingPage;
         }
 
+        /// <summary>
+        /// Compares the user input password with the actual player password
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="userInput"></param>
+        /// <returns> True if the passwords match; Otherwise, false </returns>
         public bool CheckPassword(int playerId, string userInput)
         {
-            if (!Passwords.ContainsKey(playerId))
-            {
-                return false;
-            }
             return Passwords[playerId] == userInput;
         }
 
