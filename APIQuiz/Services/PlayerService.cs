@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using APIQuiz.Models;
 using APIQuiz.Util;
@@ -10,10 +11,12 @@ namespace APIQuiz.Services
         private static readonly PlayerService PlayerServiceInstance = new();
         public static PlayerService Singleton() => PlayerServiceInstance;
         private List<Player> Players { get; }
+        private Dictionary<int, string> Passwords { get; }
         private int NextId = 1;
         private PlayerService()
         {
             Players = new List<Player>();
+            Passwords = new Dictionary<int, string>();
         }
 
         /// <summary>
@@ -42,15 +45,21 @@ namespace APIQuiz.Services
         public Player Get(int id) => Players.FirstOrDefault(p => p.Id == id);
 
         /// <summary>
-        /// Adds a new player to the game
+        /// Adds a new player to the active player list
         /// </summary>
-        /// <param name="player"></param>
-        public void Create(Player player)
+        /// <param name="userCreatedPlayer"></param>
+        /// <returns> The id of the created player </returns>
+        public int Create(UserCreatedPlayer userCreatedPlayer)
         {
+            Player player = userCreatedPlayer.GeneratePlayer();
+
             player.Id = GetAndUpdateNextId();
             player.Score = 0;
 
+            Passwords.Add(player.Id, userCreatedPlayer.Password);
             Players.Add(player);
+
+            return player.Id;
         }
 
         /// <summary>
@@ -67,10 +76,13 @@ namespace APIQuiz.Services
         /// Updates a player's name 
         /// </summary>
         /// <param name="player"></param>
-        public void Update(int id, Player player)
+        public void Update(int id, UserCreatedPlayer updatedPlayer)
         {
             var index = Players.FindIndex(p => p.Id == id);
-            Players[index].CopyUpdatedDataFrom(player);
+
+            Player player = updatedPlayer.GeneratePlayer();
+
+            Players[index].CopyDataFrom(player);
         }
 
         /// <summary>
@@ -88,7 +100,18 @@ namespace APIQuiz.Services
             int firstIndexInPage = (page - 1) * PlayerServiceUtil.MAX_PLAYERS_PER_PAGE;
             int playerAmount = PlayerServiceUtil.PlayerAmountCalculation(firstIndexInPage, Players.Count);
 
-            return rankingPage;
+            return rankingPage.GetRange(firstIndexInPage, playerAmount);
+        }
+
+        /// <summary>
+        /// Compares the user input password with the actual player password
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="userInput"></param>
+        /// <returns> True if the passwords match; Otherwise, false </returns>
+        public bool CheckPassword(int playerId, string userInput)
+        {
+            return Passwords[playerId] == userInput;
         }
 
         /// <summary>
@@ -118,16 +141,6 @@ namespace APIQuiz.Services
         {
             var player = Get(id);
             return player != null;
-        }
-
-        /// <summary>
-        /// Checks if the specified player has a valid name
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns> True if the player has a valid name; Otherwise, false </returns>
-        public static bool HasValidName(Player player)
-        {
-            return !string.IsNullOrEmpty(player.Name) && !string.IsNullOrWhiteSpace(player.Name);
         }
     }
 }

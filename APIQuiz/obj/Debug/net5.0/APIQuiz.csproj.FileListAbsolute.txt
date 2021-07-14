@@ -1,3 +1,8 @@
+C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.GeneratedMSBuildEditorConfig.editorconfig
+C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.AssemblyInfoInputs.cache
+C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.AssemblyInfo.cs
+C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.csproj.CoreCompileInputs.cache
+C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.MvcApplicationPartsAssemblyInfo.cache
 C:\repo\APIQuiz\APIQuiz\bin\Debug\net5.0\appsettings.Development.json
 C:\repo\APIQuiz\APIQuiz\bin\Debug\net5.0\appsettings.json
 C:\repo\APIQuiz\APIQuiz\bin\Debug\net5.0\APIQuiz.exe
@@ -7,11 +12,6 @@ C:\repo\APIQuiz\APIQuiz\bin\Debug\net5.0\APIQuiz.runtimeconfig.dev.json
 C:\repo\APIQuiz\APIQuiz\bin\Debug\net5.0\APIQuiz.dll
 C:\repo\APIQuiz\APIQuiz\bin\Debug\net5.0\ref\APIQuiz.dll
 C:\repo\APIQuiz\APIQuiz\bin\Debug\net5.0\APIQuiz.pdb
-C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.GeneratedMSBuildEditorConfig.editorconfig
-C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.AssemblyInfoInputs.cache
-C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.AssemblyInfo.cs
-C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.csproj.CoreCompileInputs.cache
-C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.MvcApplicationPartsAssemblyInfo.cache
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\staticwebassets\APIQuiz.StaticWebAssets.Manifest.cache
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\staticwebassets\APIQuiz.StaticWebAssets.xml
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\scopedcss\bundle\APIQuiz.styles.css
@@ -20,3 +20,4 @@ C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.dll
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\ref\APIQuiz.dll
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.pdb
 C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.genruntimeconfig.cache
+C:\repo\APIQuiz\APIQuiz\obj\Debug\net5.0\APIQuiz.csproj.AssemblyReference.cache

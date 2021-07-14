@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using APIQuiz.Models;
 using APIQuiz.Services;
 using APIQuiz.Util;
@@ -22,15 +21,22 @@ namespace APIQuiz.Controllers
         /// <param name="player"></param>
         /// <returns> Created object in json format </returns>
         [HttpPost]
-        public IActionResult CreateNewPlayer(Player player)
+        public IActionResult CreateNewPlayer(UserCreatedPlayer userCreatedPlayer)
         {
-            if (!PlayerService.HasValidName(player))
+            if (!PlayerServiceUtil.IsValidName(userCreatedPlayer.Name))
+            {
+                return BadRequest();
+            }
+            
+            if (!PlayerServiceUtil.IsValidPassword(userCreatedPlayer.Password))
             {
                 return BadRequest();
             }
 
-            playerService.Create(player);
-            return CreatedAtAction(nameof(CreateNewPlayer), new { id = player.Id }, player);
+            int playerId = playerService.Create(userCreatedPlayer);
+            Player player = playerService.Get(playerId);
+
+            return CreatedAtAction(nameof(CreateNewPlayer), new { id = playerId }, player);
         }
 
         /// <summary>
@@ -61,16 +67,21 @@ namespace APIQuiz.Controllers
         /// <param name="updatedPlayer"></param>
         /// <returns> No content </returns>
         [HttpPut("{id}")]
-        public IActionResult UpdatePlayerById(int id, Player updatedPlayer)
+        public IActionResult UpdatePlayerById(int id, UserCreatedPlayer updatedPlayer)
         {
-            if (!PlayerService.HasValidName(updatedPlayer))
-            {
-                return BadRequest();
-            }
-
             if (!playerService.Exists(id))
             {
                 return NotFound();
+            }
+
+            if(!playerService.CheckPassword(id, updatedPlayer.Password))
+            {
+                return StatusCode(403);
+            }
+            
+            if (!PlayerServiceUtil.IsValidName(updatedPlayer.Name))
+            {
+                return BadRequest();
             }
 
             playerService.Update(id, updatedPlayer);
@@ -84,11 +95,21 @@ namespace APIQuiz.Controllers
         /// <param name="id"></param>
         /// <returns> No content </returns>
         [HttpDelete("{id}")]
-        public IActionResult DeletePlayerById(int id)
+        public IActionResult DeletePlayer(int id, UserCreatedPlayer player)
         {
             if (!playerService.Exists(id))
             {
                 return NotFound();
+            }
+
+            if (!playerService.CheckPassword(id, player.Password))
+            {
+                return StatusCode(403);
+            }
+
+            if (playerService.Get(id).Name != player.Name)
+            {
+                return BadRequest();
             }
 
             playerService.Delete(id);

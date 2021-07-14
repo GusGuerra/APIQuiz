@@ -12,6 +12,8 @@
         public const string EXTERNAL_API_KEY_TOKEN = "token";
         public const string EXTERNAL_API_KEY_QUESTION_AMOUNT = "amount";
         public const string EXTERNAL_API_VALUE_TOKEN_REQUEST = "request";
+        public const string CORRECT_ANSWER_MESSAGE = @"Correct! :)";
+        public const string INCORRECT_ANSWER_MESSAGE = @"Incorrect! :(";
 
         /// <summary>
         /// Appends the specfied query to an already existing uri
