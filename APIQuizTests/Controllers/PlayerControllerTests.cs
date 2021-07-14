@@ -167,8 +167,8 @@ namespace APIQuiz.Controllers.Tests
         }
 
         [Fact]
-        [Trait("PlayerController", "DeletePlayerById")]
-        public void DeletePlayerById_Valid_Test()
+        [Trait("PlayerController", "DeletePlayer")]
+        public void DeletePlayer_Valid_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
 
@@ -176,25 +176,44 @@ namespace APIQuiz.Controllers.Tests
             var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
             var createdPlayer = createdAtActionResult.Value as Player;
 
-            var deletePlayerByIdResult = playerController.DeletePlayerById(createdPlayer.Id);
-            var okResult = deletePlayerByIdResult as OkResult;
+            var deletePlayerResult = playerController.DeletePlayer(createdPlayer.Id, player);
+            var okResult = deletePlayerResult as OkResult;
 
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
         }
 
         [Fact]
-        [Trait("PlayerController", "DeletePlayerById")]
-        public void DeletePlayerById_InvalidPlayer_Test()
+        [Trait("PlayerController", "DeletePlayer")]
+        public void DeletePlayer_InvalidPlayer_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd"};
-            playerController.CreateNewPlayer(player);
+            _ = playerController.CreateNewPlayer(player);
 
-            var deletePlayerByIdResult = playerController.DeletePlayerById(PlayerServiceUtil.MAX_PLAYER_NUMBER + 1);
-            var notFoundResult = deletePlayerByIdResult as NotFoundResult;
+            var deletePlayerResult = playerController.DeletePlayer(PlayerServiceUtil.MAX_PLAYER_NUMBER + 1, player);
+            var notFoundResult = deletePlayerResult as NotFoundResult;
 
             Assert.NotNull(notFoundResult);
             Assert.Equal(404, notFoundResult.StatusCode);
+        }
+
+        [Fact]
+        [Trait("PlayerController", "DeletePlayer")]
+        public void DeletePlayer_InvalidPassword_Test()
+        {
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "correctPasswd" };
+
+            var createNewPlayerResult = playerController.CreateNewPlayer(player);
+            var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
+            var createdPlayer = createdAtActionResult.Value as Player;
+
+            UserCreatedPlayer wrongPasswordPlayer = new() { Name = player.Name, Password = "incorrectPasswd" };
+
+            var deletePlayerResult = playerController.DeletePlayer(createdPlayer.Id, wrongPasswordPlayer);
+            var forbiddenResult = deletePlayerResult as StatusCodeResult;
+
+            Assert.NotNull(forbiddenResult);
+            Assert.Equal(403, forbiddenResult.StatusCode);
         }
     }
 }

@@ -95,11 +95,21 @@ namespace APIQuiz.Controllers
         /// <param name="id"></param>
         /// <returns> No content </returns>
         [HttpDelete("{id}")]
-        public IActionResult DeletePlayerById(int id)
+        public IActionResult DeletePlayer(int id, UserCreatedPlayer player)
         {
             if (!playerService.Exists(id))
             {
                 return NotFound();
+            }
+
+            if (playerService.Get(id).Name != player.Name)
+            {
+                return BadRequest();
+            }
+
+            if (!playerService.CheckPassword(id, player.Password))
+            {
+                return StatusCode(403);
             }
 
             playerService.Delete(id);
