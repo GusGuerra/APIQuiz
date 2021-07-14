@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="page"></param>
         /// <param name="playerCount"></param>
-        /// <returns>In-bounds page number (The first page or the last page)</returns>
+        /// <returns>In-bounds page number (The first page or the last page) if the original page was out of bounds</returns>
         public static int PageNumberAdjustment(int page, int playerCount)
         {
             // lowest page number = 1

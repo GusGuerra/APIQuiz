@@ -100,7 +100,7 @@ namespace APIQuiz.Services
             int firstIndexInPage = (page - 1) * PlayerServiceUtil.MAX_PLAYERS_PER_PAGE;
             int playerAmount = PlayerServiceUtil.PlayerAmountCalculation(firstIndexInPage, Players.Count);
 
-            return rankingPage;
+            return rankingPage.GetRange(firstIndexInPage, playerAmount);
         }
 
         /// <summary>
