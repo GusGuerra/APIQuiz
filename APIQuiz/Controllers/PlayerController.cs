@@ -102,14 +102,14 @@ namespace APIQuiz.Controllers
                 return NotFound();
             }
 
-            if (playerService.Get(id).Name != player.Name)
-            {
-                return BadRequest();
-            }
-
             if (!playerService.CheckPassword(id, player.Password))
             {
                 return StatusCode(403);
+            }
+
+            if (playerService.Get(id).Name != player.Name)
+            {
+                return BadRequest();
             }
 
             playerService.Delete(id);
