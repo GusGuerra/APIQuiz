@@ -29,12 +29,32 @@ namespace APIQuiz.Controllers.Tests
 
             _ = await gameController.View("question", 0, createdPlayer.Id, true);
 
-            PlayerAnswer playerAnswer = new() { Answer = "True" };
+            PlayerAnswer playerAnswer = new() { Answer = "True", Password = player.Password };
             var getAnswerResult = gameController.GetAnswer(createdPlayer.Id, playerAnswer);
             var okResult = getAnswerResult as OkObjectResult;
 
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        [Trait("GameController", "GetAnswer")]
+        public async Task GetAnswer_InvalidPassword_Test()
+        {
+            UserCreatedPlayer player = new() { Name = "new_player_name", Password = "correctPasswd" };
+
+            var createNewPlayerResult = playerController.CreateNewPlayer(player);
+            var createdAtActionResult = createNewPlayerResult as CreatedAtActionResult;
+            var createdPlayer = createdAtActionResult.Value as Player;
+
+            _ = await gameController.View("question", 0, createdPlayer.Id, true);
+
+            PlayerAnswer playerAnswer = new() { Answer = "True", Password = "incorrectPassword" };
+            var getAnswerResult = gameController.GetAnswer(createdPlayer.Id, playerAnswer);
+            var forbiddenResult = getAnswerResult as StatusCodeResult;
+
+            Assert.NotNull(forbiddenResult);
+            Assert.Equal(403, forbiddenResult.StatusCode);
         }
 
         [Fact]

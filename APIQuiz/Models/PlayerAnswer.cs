@@ -8,5 +8,6 @@ namespace APIQuiz.Models
     public class PlayerAnswer
     {
         public string Answer { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -19,12 +19,24 @@ namespace APIQuiz.Controllers
             gameService = GameService.Singleton();
         }
 
+        /// <summary>
+        /// Compares the player's answer with the atual answer and calls Player.IncreaseScore()
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="playerAnswer"></param>
+        /// <returns> If the request is valid returns Ok(200) and a right/wrong guess message;
+        /// Otherwise, the corresponding status code </returns>
         [HttpGet("{id}")]
         public IActionResult GetAnswer(int id, PlayerAnswer playerAnswer)
         {
             if (!playerService.Exists(id))
             {
                 return NotFound();
+            }
+
+            if (!playerService.CheckPassword(id, playerAnswer.Password))
+            {
+                return StatusCode(403);
             }
 
             if (!gameService.HasActiveQuestion(id))
@@ -37,11 +49,11 @@ namespace APIQuiz.Controllers
             {
                 player.IncreaseScore(PlayerServiceUtil.POINTS_PER_CORRECT_ANSWER);
 
-                return Ok(new string(@"Correct! :)"));
+                return Ok(new string(GameServiceUtil.CORRECT_ANSWER_MESSAGE));
             }
 
             player.IncreaseScore(PlayerServiceUtil.POINTS_PER_INCORRECT_ANSWER);
-            return Ok(new string(@"Incorrect! :("));
+            return Ok(new string(GameServiceUtil.INCORRECT_ANSWER_MESSAGE));
         }
 
         [HttpGet]
