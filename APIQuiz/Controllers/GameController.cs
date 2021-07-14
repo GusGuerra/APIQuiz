@@ -58,6 +58,7 @@ namespace APIQuiz.Controllers
 
         [HttpGet]
         public async Task<IActionResult> View(
+            UserCreatedPlayer player,
             [FromQuery] string view,
             [FromQuery] int page,
             [FromQuery] int id,
@@ -68,6 +69,11 @@ namespace APIQuiz.Controllers
                 if (!playerService.Exists(id))
                 {
                     return NotFound();
+                }
+
+                if (!playerService.CheckPassword(id, player.Password))
+                {
+                    return StatusCode(403);
                 }
 
                 if (!fetch && !gameService.HasActiveQuestion(id))
