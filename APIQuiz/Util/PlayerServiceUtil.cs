@@ -100,6 +100,11 @@
                 return false;
             }
 
+            if (password.Contains(" "))
+            {
+                return false;
+            }
+
             if (CheckThreeConsecutiveDigitsSubstring(password))
             {
                 return false;

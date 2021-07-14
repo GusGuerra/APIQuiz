@@ -37,6 +37,7 @@ namespace APIQuiz.Controllers.Tests
         [InlineData("password_123")]
         [InlineData("dontUseTheWordPassword")]
         [InlineData("dontUseThreeConsecutiveNumbers456")]
+        [InlineData("you can't use spaces")]
         [Trait("PlayerController", "CreateNewPlayer")]
         public void CreateNewPlayer_InvalidPassword_Test(string password)
         {
