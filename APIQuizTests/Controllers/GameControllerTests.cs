@@ -19,7 +19,7 @@ namespace APIQuiz.Controllers.Tests
 
         [Fact]
         [Trait("GameController", "GetAnswer")]
-        public async Task GetAnswer_Valid_Test()
+        public async Task GuessAnswer_Valid_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "randomPasswd" };
 
@@ -30,7 +30,7 @@ namespace APIQuiz.Controllers.Tests
             _ = await gameController.View(player, "question", 0, createdPlayer.Id, true);
 
             PlayerAnswer playerAnswer = new() { Answer = "True", Password = player.Password };
-            var getAnswerResult = gameController.GetAnswer(createdPlayer.Id, playerAnswer);
+            var getAnswerResult = gameController.GuessAnswer(createdPlayer.Id, playerAnswer);
             var okResult = getAnswerResult as OkObjectResult;
 
             Assert.NotNull(okResult);
@@ -39,7 +39,7 @@ namespace APIQuiz.Controllers.Tests
 
         [Fact]
         [Trait("GameController", "GetAnswer")]
-        public async Task GetAnswer_InvalidPassword_Test()
+        public async Task GuessAnswer_InvalidPassword_Test()
         {
             UserCreatedPlayer player = new() { Name = "new_player_name", Password = "correctPasswd" };
 
@@ -50,7 +50,7 @@ namespace APIQuiz.Controllers.Tests
             _ = await gameController.View(player, "question", 0, createdPlayer.Id, true);
 
             PlayerAnswer playerAnswer = new() { Answer = "True", Password = "incorrectPassword" };
-            var getAnswerResult = gameController.GetAnswer(createdPlayer.Id, playerAnswer);
+            var getAnswerResult = gameController.GuessAnswer(createdPlayer.Id, playerAnswer);
             var forbiddenResult = getAnswerResult as StatusCodeResult;
 
             Assert.NotNull(forbiddenResult);

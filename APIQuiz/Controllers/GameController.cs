@@ -22,30 +22,30 @@ namespace APIQuiz.Controllers
         /// <summary>
         /// Compares the player's answer with the atual answer and calls Player.IncreaseScore()
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="playerId"></param>
         /// <param name="playerAnswer"></param>
         /// <returns> If the request is valid returns Ok(200) and a right/wrong guess message;
         /// Otherwise, the corresponding status code </returns>
-        [HttpGet("{id}")]
-        public IActionResult GetAnswer(int id, PlayerAnswer playerAnswer)
+        [HttpPost("{playerId}")]
+        public IActionResult GuessAnswer(int playerId, PlayerAnswer playerAnswer)
         {
-            if (!playerService.Exists(id))
+            if (!playerService.Exists(playerId))
             {
                 return NotFound();
             }
 
-            if (!playerService.CheckPassword(id, playerAnswer.Password))
+            if (!playerService.CheckPassword(playerId, playerAnswer.Password))
             {
                 return StatusCode(403);
             }
 
-            if (!gameService.HasActiveQuestion(id))
+            if (!gameService.HasActiveQuestion(playerId))
             {
                 return BadRequest();
             }
 
-            var player = playerService.Get(id);
-            if (gameService.ComparePlayerAnswer(playerAnswer.Answer, id))
+            var player = playerService.Get(playerId);
+            if (gameService.ComparePlayerAnswer(playerAnswer.Answer, playerId))
             {
                 player.IncreaseScore(PlayerServiceUtil.POINTS_PER_CORRECT_ANSWER);
 

@@ -18,6 +18,7 @@ namespace APIQuiz.Services.Tests
         [Trait("GameService", "ViewNew")]
         public async Task ViewNew_Simple_Test()
         {
+            // TODO: This test should not use the network and must mock HTTP requests
             var question = await gameService.ViewNew(1, true);
 
             Assert.IsType<Question>(question);
@@ -27,6 +28,7 @@ namespace APIQuiz.Services.Tests
         [Trait("GameService", "ViewNew")]
         public async Task ViewNew_ReUseQuestion_Test()
         {
+            // TODO: This test should not use the network and must mock HTTP requests
             var newQuestion = await gameService.ViewNew(1, true);
             var existingQuestion = await gameService.ViewNew(1, false);
 
@@ -37,6 +39,7 @@ namespace APIQuiz.Services.Tests
         [Trait("GameService", "ComparePlayerAnswer")]
         public async Task ComparePlayerAnswerTest()
         {
+            // TODO: This test should not use the network and must mock HTTP requests
             _ = await gameService.ViewNew(1, true);
             var question = await gameService.ViewNew(1, false);
 
