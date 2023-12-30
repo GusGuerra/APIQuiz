@@ -4,6 +4,7 @@
     {
         public const int DEFAULT_NEW_QUESTION_AMOUNT = 1;
         public const bool DEFAULT_NEW_QUESTION_OPTION = false;
+        public const int DEFAULT_PAGE_NUMBER = 1;
         public const string EXTERNAL_API_SCHEME = "https";
         public const string EXTERNAL_API_HOST = "opentdb.com";
         public const string EXTERNAL_API_PATH_TOKEN = "api_token.php";

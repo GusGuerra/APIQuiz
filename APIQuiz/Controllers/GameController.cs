@@ -20,7 +20,7 @@ namespace APIQuiz.Controllers
         }
 
         /// <summary>
-        /// Compares the player's answer with the atual answer and calls Player.IncreaseScore()
+        /// Compares the player's answer with the actual answer and calls Player.IncreaseScore()
         /// </summary>
         /// <param name="playerId"></param>
         /// <param name="playerAnswer"></param>
@@ -57,44 +57,39 @@ namespace APIQuiz.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> View(
+        public IActionResult ViewRanking([FromQuery] int page = GameServiceUtil.DEFAULT_PAGE_NUMBER)
+        {
+            if (playerService.GetAll(PlayerServiceUtil.DEFAULT_PAGE_NUMBER).Count == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(playerService.GetRanking(page));
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> GetQuestion(
             UserCreatedPlayer player,
-            [FromQuery] string view,
-            [FromQuery] int page,
             [FromQuery] int id,
             [FromQuery] bool fetch = GameServiceUtil.DEFAULT_NEW_QUESTION_OPTION)
         {
-            if (view == "question")
+            if (!playerService.Exists(id))
             {
-                if (!playerService.Exists(id))
-                {
-                    return NotFound();
-                }
-
-                if (!playerService.CheckPassword(id, player.Password))
-                {
-                    return StatusCode(403);
-                }
-
-                if (!fetch && !gameService.HasActiveQuestion(id))
-                {
-                    return BadRequest();
-                }
-
-                PlayerFriendlyQuestion question = (await gameService.ViewNew(id, fetch)).GenerateUserFriendlyQuestion();
-                return Ok(question);
-            }
-            else if (view == "ranking")
-            {
-                if (playerService.GetAll(PlayerServiceUtil.DEFAULT_PAGE_NUMBER).Count == 0)
-                {
-                    return NoContent();
-                }
-
-                return Ok(playerService.GetRanking(page));
+                return NotFound();
             }
 
-            return BadRequest();
+            if (!playerService.CheckPassword(id, player.Password))
+            {
+                return StatusCode(403);
+            }
+
+            if (!fetch && !gameService.HasActiveQuestion(id))
+            {
+                return BadRequest();
+            }
+
+            PlayerFriendlyQuestion question = (await gameService.ViewNew(id, fetch)).GenerateUserFriendlyQuestion();
+            return Ok(question);
         }
     }
 }
