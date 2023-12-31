@@ -56,7 +56,7 @@ namespace APIQuiz.Controllers
             return Ok(new string(GameServiceUtil.INCORRECT_ANSWER_MESSAGE));
         }
 
-        [HttpGet]
+        [HttpGet("ranking")]
         public IActionResult ViewRanking([FromQuery] int page = GameServiceUtil.DEFAULT_PAGE_NUMBER)
         {
             if (playerService.GetAll(PlayerServiceUtil.DEFAULT_PAGE_NUMBER).Count == 0)
@@ -67,7 +67,7 @@ namespace APIQuiz.Controllers
             return Ok(playerService.GetRanking(page));
         }
         
-        [HttpPost]
+        [HttpPost("question")]
         public async Task<IActionResult> GetQuestion(
             UserCreatedPlayer player,
             [FromQuery] int id,
